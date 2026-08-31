@@ -4,7 +4,7 @@ import 'package:pharmacy_management/core/theme/appcolors.dart';
 class Apptheme {
   static ThemeData lightTheme = ThemeData(
     brightness: .light,
-    colorScheme: ColorScheme(
+    colorScheme: const ColorScheme(
       brightness: .light,
       primary: AppColors.primary,
       onPrimary: AppColors.onPrimary,
