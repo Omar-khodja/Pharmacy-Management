@@ -25,7 +25,7 @@ class PrimaryElevatedbutton extends StatelessWidget {
           elevation: 4,
         ),
 
-        onPressed: () => onClick,
+        onPressed: () => onClick(),
         child: Row(
           mainAxisSize: .min,
           children: [

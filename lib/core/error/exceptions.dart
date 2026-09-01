@@ -4,5 +4,14 @@ class RemoteException implements Exception {
   RemoteException(this.message);
 
   @override
-  String toString() => 'RemoteException: $message';
+  String toString() => message;
+}
+
+class AppDioException implements Exception {
+  final String message;
+
+  AppDioException(this.message);
+
+  @override
+  String toString() => message;
 }

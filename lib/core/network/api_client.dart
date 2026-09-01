@@ -36,6 +36,29 @@ class ApiClient {
       throw RemoteException(_handleError(e));
     }
   }
+  Future<Response> postWithToken(
+    String endpoint,
+    String token,
+    Map<String, dynamic>? body,
+  ) async {
+    try {
+      final response = await dio.post(
+        endpoint,
+        data: body, 
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        ),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw RemoteException(_handleError(e));
+    }
+  }
+
 
   String _handleError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout) {
@@ -43,9 +66,9 @@ class ApiClient {
     } else if (e.type == DioExceptionType.receiveTimeout) {
       return "Receive timeout";
     } else if (e.type == DioExceptionType.badResponse) {
-      return "Server error: ${e.response?.statusCode}";
+      return "${e.response?.statusCode}";
     } else {
-      return "Unexpected error: ${e.message}";
+      return "${e.message}";
     }
   }
 }

@@ -9,3 +9,6 @@ abstract class AppFailure {
 class RemoteFailure extends AppFailure {
    RemoteFailure(super.message);
 }
+class DioFailure extends AppFailure {
+  DioFailure(super.message);
+}
