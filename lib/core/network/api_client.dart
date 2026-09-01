@@ -2,21 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
 
 class ApiClient {
-  final Dio _dio = Dio();
+  final Dio dio;
 
-  ApiClient() {
-    _dio.options.baseUrl = "https://studiosie.store/sie-api/api/pharmacy";
-    _dio.options.connectTimeout = const Duration(seconds: 10);
-    _dio.options.receiveTimeout = const Duration(seconds: 10);
-
-  
+  ApiClient({required this.dio})   {
+    dio.options.baseUrl = "https://studiosie.store/sie-api/api/pharmacy";
+    dio.options.connectTimeout = const Duration(seconds: 10);
+    dio.options.receiveTimeout = const Duration(seconds: 10);
   }
 
-  Future<Response> authLogin(
-    Map<String, dynamic> data,
-  ) async {
+  Future<Response> authLogin(Map<String, dynamic> data) async {
     try {
-      final response = await _dio.post("/auth/login", data: data);
+      final response = await dio.post("/auth/login", data: data);
       return response;
     } on DioException catch (e) {
       throw RemoteException(_handleError(e));
@@ -25,7 +21,7 @@ class ApiClient {
 
   Future<Response> getWithToken(String endpoint, String token) async {
     try {
-      final response = await _dio.get(
+      final response = await dio.get(
         endpoint,
         options: Options(
           headers: {
