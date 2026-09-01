@@ -5,7 +5,7 @@ class ApiErrorHandler {
    String handleError(String statusCode) {
     switch (statusCode) {
       case "401":
-        return "Not logged in or token expired. Please log in again.";
+        return "401";
       case "403":
         return "Account inactive.";
       case "404":

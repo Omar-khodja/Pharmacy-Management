@@ -28,6 +28,7 @@ class _DashboardState extends State<Dashboard> {
               );
               Navigator.pushReplacementNamed(context, "/login");
             }if(mounted && state is AuthFailure){
+              
              Fluttertoast.showToast(
                 msg: state.message,
                 toastLength: Toast.LENGTH_SHORT,
@@ -35,6 +36,9 @@ class _DashboardState extends State<Dashboard> {
                 backgroundColor: Colors.red,
                 textColor: Colors.white,
               );
+              if (state.statusCode == 401) {
+                Navigator.pushReplacementNamed(context, "/login");
+              }
             }
           },
           child: ElevatedButton(

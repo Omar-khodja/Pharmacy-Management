@@ -5,16 +5,16 @@ import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.d
 
 class AuthCubit extends Cubit<AuthCubitState> {
   final LoginUsecase loginUsecase;
-    final LongOutUsecase longOutUsecase;
+  final LongOutUsecase longOutUsecase;
 
-
-  AuthCubit({required this.loginUsecase, required this.longOutUsecase}) : super(AuthInitial());
+  AuthCubit({required this.loginUsecase, required this.longOutUsecase})
+    : super(AuthInitial());
 
   Future<void> login(String email, String password) async {
     emit(AuthLoading());
     final result = await loginUsecase.call(email, password);
     result.fold(
-      ifLeft: (failure) => emit(AuthFailure(failure.message)),
+      ifLeft: (failure) => emit(AuthFailure(message: failure.message)),
       ifRight: (authstate) => emit(AuthSuccess(authstate)),
     );
   }
@@ -23,7 +23,17 @@ class AuthCubit extends Cubit<AuthCubitState> {
     emit(AuthLoading());
     final result = await longOutUsecase.call();
     result.fold(
-      ifLeft: (failure) => emit(AuthFailure(failure.message)),
+      ifLeft: (failure) {
+        if (failure.message == "401") {
+          return emit(
+            const AuthFailure(
+              message: "Not logged in or token expired. Please log in again.",
+              statusCode: 401,
+            ),
+          );
+        }
+        return emit(AuthFailure(message: failure.message));
+      },
       ifRight: (message) => emit(AuthLoggedOut()),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy_management/core/storage/tokenstorage.dart';
+import 'package:lottie/lottie.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -16,6 +17,7 @@ class _SplashscreenState extends State<Splashscreen> {
   }
 
   Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 5));
     final token = await TokenStorage().getToken();
     if (!mounted) return;
     if (token != null) {
@@ -27,6 +29,10 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    return Scaffold(
+      body: Center(
+        child: Lottie.asset('assets/loading.json', width: 200, height: 200),
+      ),
+    );
   }
 }

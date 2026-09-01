@@ -16,8 +16,9 @@ class AuthSuccess extends AuthCubitState {
 
 class AuthFailure extends AuthCubitState {
   final String message;
+  final int? statusCode;
 
-  const AuthFailure(this.message);
+  const AuthFailure({required this.message, this.statusCode });
 }
 
 class AuthLoggedOut extends AuthCubitState {}
