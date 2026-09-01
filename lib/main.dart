@@ -7,7 +7,7 @@ import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/feature/Authentication/presentaion/screen/login.dart';
 import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
     as di;
-import 'package:pharmacy_management/feature/dashboard/presentaion/screen/dashboard.dart';
+import 'package:pharmacy_management/navigation_screen.dart';
 import 'package:pharmacy_management/splashscreen.dart';
 
 void main() async {
@@ -33,12 +33,12 @@ class MyApp extends StatelessWidget {
           ),
           child: const Login(),
         ),
-        "/home": (context) => BlocProvider(
+        "/navigation": (context) => BlocProvider(
           create: (context) => AuthCubit(
             loginUsecase: di.sl<LoginUsecase>(),
             longOutUsecase: di.sl<LongOutUsecase>(),
           ),
-          child: const Dashboard(),
+          child: const NavigationScreen(),
         ),
       },
       initialRoute: "/splash",

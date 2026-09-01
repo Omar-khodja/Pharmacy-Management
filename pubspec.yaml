@@ -41,6 +41,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_secure_storage: ^11.0.0
   dart_either: ^2.2.0
+  google_nav_bar: ^5.0.7
+  line_icons: ^2.0.2
 
 dev_dependencies:
   flutter_test:

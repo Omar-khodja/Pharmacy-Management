@@ -19,7 +19,7 @@ class _SplashscreenState extends State<Splashscreen> {
     final token = await TokenStorage().getToken();
     if (!mounted) return;
     if (token != null) {
-      Navigator.pushReplacementNamed(context, "/home");
+      Navigator.pushReplacementNamed(context, "/navigation");
     } else {
       Navigator.pushReplacementNamed(context, "/login");
     }

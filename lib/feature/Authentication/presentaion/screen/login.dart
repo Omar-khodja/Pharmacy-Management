@@ -67,7 +67,10 @@ class _LoginState extends State<Login> {
                             backgroundColor: Colors.green,
                             textColor: Colors.white,
                           );
-                          Navigator.pushReplacementNamed(context, "/home");
+                          Navigator.pushReplacementNamed(
+                            context,
+                            "/navigation",
+                          );
                         } else if (state is AuthFailure) {
                           Fluttertoast.showToast(
                             msg: state.message,
