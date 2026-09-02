@@ -7,6 +7,7 @@ import 'package:pharmacy_management/feature/Authentication/data/data_source.dart
 import 'package:pharmacy_management/feature/Authentication/data/repo/auth_repo_impl.dart';
 import 'package:pharmacy_management/feature/Authentication/domain/usecase/login_usecase.dart';
 
+final sl = GetIt.instance;
 
 void initAuthFeature(GetIt sl) {
   sl.registerLazySingleton(() => AuthRemoteDatasource(sl<ApiClient>()));

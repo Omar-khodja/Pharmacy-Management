@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MedicineManagment extends StatefulWidget {
-  const MedicineManagment({super.key});
+class MedicineManagement extends StatefulWidget {
+  const MedicineManagement({super.key});
 
   @override
-  State<MedicineManagment> createState() => _MedicineManagmentState();
+  State<MedicineManagement> createState() => _MedicineManagementState();
 }
 
-class _MedicineManagmentState extends State<MedicineManagment> {
+class _MedicineManagementState extends State<MedicineManagement> {
   @override
   Widget build(BuildContext context) {
     return Center(

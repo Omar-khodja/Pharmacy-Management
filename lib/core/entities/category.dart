@@ -1,0 +1,13 @@
+import 'package:equatable/equatable.dart';
+
+class Category extends Equatable {
+  final int id;
+  final String name;
+  final String nameAr;
+
+  const Category({required this.id, required this.name, required this.nameAr});
+
+  @override
+  List<Object?> get props => [id, name, nameAr];
+}
+

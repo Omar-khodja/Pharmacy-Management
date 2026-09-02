@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             loginUsecase: di.sl<LoginUsecase>(),
             longOutUsecase: di.sl<LongOutUsecase>(),
           ),
-          child: const NavigationScreen(),
+          child:  NavigationScreen(sl: di.sl,),
         ),
       },
       initialRoute: "/splash",

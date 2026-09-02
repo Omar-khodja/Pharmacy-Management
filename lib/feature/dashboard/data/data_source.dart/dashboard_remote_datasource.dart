@@ -15,8 +15,10 @@ class DashboardRemoteDatasource extends BaseDashboardDatasource {
       if (response.statusCode != 200) {
         throw RemoteException('Failed to load dashboard data');
       }
-      debugPrint('////////////////////Dashboard data: ${response.data}');
-      return DashboardDataModel.fromJson(response.data);
+      debugPrint(
+        '////////////////////Dashboard data: ${response.data["data"]}',
+      );
+      return DashboardDataModel.fromJson(response.data["data"]);
     }on DioException catch (e) {
       final serverMessage = e.response?.data?["message"];
       throw AppDioException(serverMessage ?? "Network error: ${e.message}");
