@@ -12,3 +12,6 @@ class RemoteFailure extends AppFailure {
 class DioFailure extends AppFailure {
   DioFailure(super.message);
 }
+class LocalStorageFailure extends AppFailure {
+  LocalStorageFailure(super.message);
+}

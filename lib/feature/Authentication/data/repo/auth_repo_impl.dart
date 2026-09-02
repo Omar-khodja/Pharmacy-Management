@@ -45,7 +45,7 @@ class AuthRepoImpl implements BaseAuthRepo {
     try {
       final token = await tokenStorage.getToken();
       if (token == null) {
-        return Left(RemoteFailure("No token found"));
+        return Left(LocalStorageFailure("No token found"));
       }
       final data = await datasource.longOut(token);
       await tokenStorage.deleteToken();
