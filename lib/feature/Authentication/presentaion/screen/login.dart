@@ -41,9 +41,16 @@ class _LoginState extends State<Login> {
           child: Center(
             child: SingleChildScrollView(
               child: Card(
-                color: Theme.of(context).colorScheme.surfaceContainer,
+                color: Theme.of(context).colorScheme.surface,
                 elevation: 4,
-                shape: RoundedRectangleBorder(borderRadius: .circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: .circular(12),
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.onSurface
+                        .withValues(alpha: 0.2),
+                    width: 1,
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 24,
