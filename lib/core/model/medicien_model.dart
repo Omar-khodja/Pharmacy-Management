@@ -28,7 +28,7 @@ class MedicienModel extends Medicine {
       quantity: (json['quantity']?? 0)as int,
       minStockLevel: json['min_stock_level'],
       expiryDate: DateTime.parse(json['expiry_date']),
-      expiryStatus: json['expiry_status'],
+      expiryStatus: json['expiry_status'] ,
       isLowStock: json['is_low_stock'],
       isExpired: json['is_expired'],
       isExpiringSoon: json['is_expiring_soon'],

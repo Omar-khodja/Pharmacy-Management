@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
+import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.dart';
 import 'package:pharmacy_management/core/usecase/longout_usecase.dart';
 import 'package:pharmacy_management/feature/Authentication/domain/usecase/login_usecase.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
@@ -34,20 +36,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
   initState() {
     super.initState();
     _pages = [
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => DashboardCubit(
-              getDashBoardDataUseCase: widget.sl<GetDashBoardDataUseCase>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => AuthCubit(
-              loginUsecase: widget.sl<LoginUsecase>(),
-              longOutUsecase: widget.sl<LongOutUsecase>(),
-            ),
-          ),
-        ],
+      BlocProvider(
+        create: (context) => DashboardCubit(
+          getDashBoardDataUseCase: widget.sl<GetDashBoardDataUseCase>(),
+        ),
+
         child: const Dashboard(),
       ),
       const MedicineManagement(),
@@ -63,8 +56,42 @@ class _NavigationScreenState extends State<NavigationScreen> {
         elevation: 20,
         title: Text(_pageTitles[_selectedIndex]),
         backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              context.read<AuthCubit>().logout();
+            },
+            child: const Text("Logout"),
+          ),
+        ],
       ),
-      body: _pages[_selectedIndex],
+      body: BlocListener<AuthCubit,AuthCubitState>(
+        listener: (context, state) {
+          if (mounted && state is AuthLoggedOut) {
+            Fluttertoast.showToast(
+              msg: "Logged out successfully",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+            Navigator.pushReplacementNamed(context, "/login");
+          }
+          if (mounted && state is AuthFailure) {
+            Fluttertoast.showToast(
+              msg: state.message,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+            if (state.statusCode == 401) {
+              Navigator.pushReplacementNamed(context, "/login");
+            }
+          }
+        },
+        child: _pages[_selectedIndex],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,

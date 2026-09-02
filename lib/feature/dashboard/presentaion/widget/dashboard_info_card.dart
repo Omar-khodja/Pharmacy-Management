@@ -6,47 +6,67 @@ class DashboardInfoCard extends StatelessWidget {
     required this.title,
     required this.value,
     required this.icon,
-     this.backgroundColor,
+    this.isError = false,
   });
   final String title;
   final String value;
   final IconData icon;
-  final Color? backgroundColor;
+  final bool isError;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color:backgroundColor != null?const Color(0xFF842029): Colors.grey.shade300)),
-      elevation: 4,
-      color: backgroundColor ?? Theme.of(context).colorScheme.surface,
-      margin: const EdgeInsets.all(8.0),
-
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: isError ? const Color(0xFF842029) : Colors.transparent,
+        ),
+      ),
+      elevation: isError ? 6 : 2,
+      color: isError
+          ? Theme.of(context).colorScheme.error.withValues(alpha: 0.8)
+          : Theme.of(context).colorScheme.surface,
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+           
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title, style:  TextStyle(fontSize: 16,color: backgroundColor != null?const  Color(0xFF842029): Colors.black,fontWeight: FontWeight.bold),),
-                Icon(icon,color: backgroundColor != null
-                      ? const Color(0xFF842029)
-                      : Theme.of(context).colorScheme.primary,size: 30,),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: isError
+                        ? Theme.of(context).colorScheme.onError
+                        : Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Icon(
+                  icon,
+                  color: isError
+                      ? Theme.of(context).colorScheme.onError
+                      : Theme.of(context).colorScheme.primary,
+                  size: 28,
+                ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Text(
               value,
-              style:  TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: backgroundColor != null
-                    ? const Color(0xFF842029)
-                    : Colors.black,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: isError
+                    ? Theme.of(context).colorScheme.onError
+                    : Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
-        )
+        ),
       ),
     );
+    
   }
 }
