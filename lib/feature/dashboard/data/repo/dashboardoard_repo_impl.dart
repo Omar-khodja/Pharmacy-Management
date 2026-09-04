@@ -19,16 +19,16 @@ class DashboardRepoImpl extends BaseDashboardRepo {
     try {
       final token = await tokenStorage.getToken();
       if (token == null) {
-        return Left(LocalStorageFailure("No token found"));
+        return Left(LocalStorageFailure(message:  "No token found"));
       }
       final dashboardData = await datasource.getDashboardData(
         token,
       );
       return Right(dashboardData);
     } on RemoteException catch (e) {
-      return Left(RemoteFailure(e.message));
+      return Left(RemoteFailure(message: e.message,statusCode:e.statusCode));
     }on AppDioException catch (e) {
-      return Left(DioFailure(e.message));
+      return Left(DioFailure(message:  e.message));
     }
   }
 }

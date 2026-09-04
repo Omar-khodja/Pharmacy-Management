@@ -1,21 +1,24 @@
 abstract class AppFailure {
   final String message;
-
-  AppFailure(this.message);
+  final int? statusCode;
+  AppFailure({required this.message,this.statusCode});
 
   @override
   String toString() => 'AppFa: $message';
 }
+
 class RemoteFailure extends AppFailure {
-   RemoteFailure(super.message);
+  RemoteFailure({required super.message , super.statusCode});
 }
+
 class DioFailure extends AppFailure {
-  DioFailure(super.message);
+  DioFailure({required super.message });
 }
+
 class LocalStorageFailure extends AppFailure {
-  LocalStorageFailure(super.message);
+  LocalStorageFailure({required super.message });
 }
 
 class UnexpectedFailure extends AppFailure {
-  UnexpectedFailure(super.message);
+  UnexpectedFailure({required super.message });
 }

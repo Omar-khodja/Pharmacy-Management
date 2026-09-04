@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
+import 'package:pharmacy_management/core/network/AuthInterceptor.dart';
 
 class ApiClient {
   final Dio dio;
 
-  ApiClient({required this.dio}) {
+  ApiClient({required this.dio, required void Function() onUnauthorized}) {
     dio.options.baseUrl = "https://studiosie.store/sie-api/api/pharmacy";
     dio.options.connectTimeout = const Duration(seconds: 10);
     dio.options.receiveTimeout = const Duration(seconds: 10);
+    dio.interceptors.add(AuthInterceptor(onUnauthorized));
   }
 
   Future<Response> authLogin(Map<String, dynamic> data) async {

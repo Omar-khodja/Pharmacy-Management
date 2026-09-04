@@ -9,7 +9,7 @@ class DashboardRemoteDatasource extends BaseDashboardDatasource {
   @override
   Future<DashboardDataModel> getDashboardData(String token) async {
     try {
-      final response = await apiClient.getWithToken('/dashboard', token);
+      final response = await apiClient.getWithToken('/dashboard', "sdgfqgbgf");
 
       debugPrint(
         '////////////////////Dashboard data: ${response.data["data"]}',

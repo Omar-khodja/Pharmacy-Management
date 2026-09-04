@@ -4,5 +4,6 @@ import 'package:pharmacy_management/core/error/failure.dart';
 
 abstract class BaseAuthRepo {
   Future<Either<AppFailure, Authstate>> login(String email, String password);
-  Future<Either<AppFailure, String>> longOut();
+  Future<Either<AppFailure, String>> logOut();
+  Future<Either<AppFailure, String>> forceLogOut();
 }

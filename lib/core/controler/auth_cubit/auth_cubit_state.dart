@@ -20,7 +20,13 @@ class Authorized extends AuthCubitState {
 
 class UnAuthorized extends AuthCubitState {
   final String message;
-  final int? statusCode;
-
-  const UnAuthorized({required this.message, this.statusCode});
+  final bool isTokenExpired;
+  final bool isAccountInactive;
+  final bool isValidationError;
+  UnAuthorized({
+    required this.message,
+    this.isAccountInactive = false,
+    this.isTokenExpired = false,
+    this.isValidationError = false,
+  });
 }

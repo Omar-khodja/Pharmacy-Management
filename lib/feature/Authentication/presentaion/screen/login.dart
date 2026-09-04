@@ -79,8 +79,6 @@ class _LoginState extends State<Login> {
                             "/navigation",
                           );
                         } else if (state is UnAuthorized) {
-                          debugPrint(state.message);
-
                           Fluttertoast.showToast(
                             msg: state.message,
                             toastLength: Toast.LENGTH_SHORT,
@@ -121,7 +119,9 @@ class _LoginState extends State<Login> {
                               labelText: "Email",
                               prefixIcon: const Icon(Icons.email_outlined),
                               border: const OutlineInputBorder(),
-                              errorText: state is UnAuthorized
+                              errorText:
+                                  (state is UnAuthorized) &&
+                                      state.isValidationError
                                   ? "Please check your Email"
                                   : null,
                             ),
@@ -143,7 +143,9 @@ class _LoginState extends State<Login> {
                               labelText: "Password",
                               prefixIcon: const Icon(Icons.email_outlined),
                               border: const OutlineInputBorder(),
-                              errorText: state is UnAuthorized
+                              errorText:
+                                  (state is UnAuthorized) &&
+                                      state.isValidationError
                                   ? "Please check your password"
                                   : null,
                             ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/core/theme/apptheme.dart';
-import 'package:pharmacy_management/core/usecase/longout_usecase.dart';
-import 'package:pharmacy_management/feature/Authentication/domain/usecase/login_usecase.dart';
+
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/feature/Authentication/presentaion/screen/login.dart';
 import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
@@ -27,18 +26,12 @@ class MyApp extends StatelessWidget {
       routes: {
         "/splash": (context) => const Splashscreen(),
         "/login": (context) => BlocProvider(
-          create: (context) => AuthCubit(
-            loginUsecase: di.sl<LoginUsecase>(),
-            longOutUsecase: di.sl<LongOutUsecase>(),
-          ),
+          create: (context) => di.sl<AuthCubit>(),
           child: const Login(),
         ),
         "/navigation": (context) => BlocProvider(
-          create: (context) => AuthCubit(
-            loginUsecase: di.sl<LoginUsecase>(),
-            longOutUsecase: di.sl<LongOutUsecase>(),
-          ),
-          child:  NavigationScreen(sl: di.sl,),
+          create: (context) => di.sl<AuthCubit>(),
+          child: NavigationScreen(sl: di.sl),
         ),
       },
       initialRoute: "/splash",
