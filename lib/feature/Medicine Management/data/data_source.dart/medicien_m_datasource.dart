@@ -67,13 +67,16 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
   Future<List<MedicienModel>> search(String query, String token) async {
     try {
       final respons = await apiClient.get(
-        "/medicines/search?q=$query&page=1",
+        "/medicines?q=$query",
         token,
       );
-      debugPrint(respons.data.toString());
+      debugPrint(
+        "/////////////////////////////////// search ${respons.data.toString()}",
+      );
       final List data = respons.data['data'] as List;
       return data.map((json) => MedicienModel.fromJson(json)).toList();
     } catch (e) {
+      debugPrint("/////////////////////////////////// search ${e.toString()}");
       rethrow;
     }
   }

@@ -6,6 +6,7 @@ import 'package:pharmacy_management/feature/dashboard/data/repo/dashboardoard_re
 import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
 
 void initDashboardFeature(GetIt sl) {
+  
   sl.registerLazySingleton(
     () => DashboardRemoteDatasource(apiClient: sl<ApiClient>()),
   );

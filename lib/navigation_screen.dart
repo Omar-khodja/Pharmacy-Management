@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
+import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
 import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
@@ -41,7 +42,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
         child: const Dashboard(),
       ),
-      const MedicineManagement(),
+      BlocProvider(
+        create: (context) => MedicienMangmentBloc(
+          addUsecase: widget.sl(),
+          deleteUsecase: widget.sl(),
+          detailsUsecase: widget.sl(),
+          editeUsecase: widget.sl(),
+          searchUsecase: widget.sl(),
+        ),
+        child: const MedicineManagement(),
+      ),
       const Sales(),
       const Inventory(),
     ];
