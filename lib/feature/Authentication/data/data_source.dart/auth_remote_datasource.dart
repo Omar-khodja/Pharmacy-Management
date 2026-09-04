@@ -16,47 +16,36 @@ class AuthRemoteDatasource implements BaseAuthDatasource {
         "email": email,
         "password": password,
       });
-      if (response.statusCode == 200) {
-        final data = response.data;
-        debugPrint("AuthRemoteDatasource login response data: $data");
-        if (data["success"] == true) {
-          return AuthstateModel.fromJson(data);
-        } else {
-          throw RemoteException('Login failed: ${data["message"]}');
-        }
-      } else {
-        throw RemoteException('Failed to login: ${response.statusCode}');
-      }
+
+      final data = response.data;
+      debugPrint("AuthRemoteDatasource login response data: $data");
+      return AuthstateModel.fromJson(data);
     } on DioException catch (e) {
-      final serverMessage = e.response?.data?["message"];
-      throw AppDioException(serverMessage ?? "Network error: ${e.message}");
-    } catch (e) {
-      throw RemoteException('$e');
+      debugPrint("log in exceptions $e");
+      rethrow;
     }
   }
 
   @override
   Future<String> longOut(String token) async {
     try {
-      final response = await apiClient.postWithToken("/auth/logout", token,null);
+      final response = await apiClient.postWithToken(
+        "/auth/logout",
+        token,
+        null,
+      );
       debugPrint(
         "///////////////////////////////////AuthRemoteDatasource logout response data: $response",
       );
-      if (response.statusCode == 200) {
-        final data = response.data;
-        if (data["success"] == true) {
-          return "Logout successful";
-        } else {
-          throw RemoteException('Logout failed: ${data["message"]}');
-        }
-      } else {
-        throw RemoteException('Failed to logout: ${response.statusCode}');
-      }
+
+      return "Logout successful";
     } on DioException catch (e) {
       final serverMessage = e.response?.data?["message"];
       throw AppDioException(serverMessage ?? "Network error: ${e.message}");
     } catch (e) {
-      throw RemoteException('$e');
+      debugPrint("logout exceptions $e");
+
+      rethrow;
     }
   }
 }

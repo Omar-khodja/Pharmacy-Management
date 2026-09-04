@@ -1,7 +1,7 @@
 class RemoteException implements Exception {
   final String message;
-
-  RemoteException(this.message);
+  final int? statusCode;
+  RemoteException({required this.message , this.statusCode});
 
   @override
   String toString() => message;

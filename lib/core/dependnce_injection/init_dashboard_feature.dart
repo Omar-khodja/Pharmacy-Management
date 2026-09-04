@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:pharmacy_management/core/error/api_error_handler.dart';
 import 'package:pharmacy_management/core/network/api_client.dart';
 import 'package:pharmacy_management/core/storage/tokenstorage.dart';
 import 'package:pharmacy_management/feature/dashboard/data/data_source.dart/dashboard_remote_datasource.dart';
@@ -14,7 +13,6 @@ void initDashboardFeature(GetIt sl) {
     () => DashboardRepoImpl(
       datasource: sl<DashboardRemoteDatasource>(),
       tokenStorage: sl<TokenStorage>(),
-      apiErrorHandler: sl<ApiErrorHandler>(),
     ),
   );
   sl.registerLazySingleton(

@@ -8,33 +8,33 @@ class AuthCubit extends Cubit<AuthCubitState> {
   final LongOutUsecase longOutUsecase;
 
   AuthCubit({required this.loginUsecase, required this.longOutUsecase})
-    : super(AuthInitial());
+    : super(const AuthInitial());
 
   Future<void> login(String email, String password) async {
-    emit(AuthLoading());
+    emit(const AuthLoading());
     final result = await loginUsecase.call(email, password);
     result.fold(
-      ifLeft: (failure) => emit(AuthFailure(message: failure.message)),
-      ifRight: (authstate) => emit(AuthSuccess(authstate)),
+      ifLeft: (failure) => emit(UnAuthorized(message: failure.message)),
+      ifRight: (authstate) => emit(Authorized(authstate)),
     );
   }
 
   Future<void> logout() async {
-    emit(AuthLoading());
+    emit(const AuthLoading());
     final result = await longOutUsecase.call();
     result.fold(
       ifLeft: (failure) {
         if (failure.message == "401") {
           return emit(
-            const AuthFailure(
+            const UnAuthorized(
               message: "Not logged in or token expired. Please log in again.",
               statusCode: 401,
             ),
           );
         }
-        return emit(AuthFailure(message: failure.message));
+        return emit(UnAuthorized(message: failure.message));
       },
-      ifRight: (message) => emit(AuthLoggedOut()),
+      ifRight: (message) => emit(UnAuthorized(message: message)),
     );
   }
 }

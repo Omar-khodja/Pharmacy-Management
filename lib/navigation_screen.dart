@@ -6,8 +6,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.dart';
-import 'package:pharmacy_management/core/usecase/longout_usecase.dart';
-import 'package:pharmacy_management/feature/Authentication/domain/usecase/login_usecase.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
@@ -65,19 +63,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
           ),
         ],
       ),
-      body: BlocListener<AuthCubit,AuthCubitState>(
+      body: BlocListener<AuthCubit, AuthCubitState>(
         listener: (context, state) {
-          if (mounted && state is AuthLoggedOut) {
-            Fluttertoast.showToast(
-              msg: "Logged out successfully",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-            );
-            Navigator.pushReplacementNamed(context, "/login");
-          }
-          if (mounted && state is AuthFailure) {
+          if (mounted && state is UnAuthorized) {
             Fluttertoast.showToast(
               msg: state.message,
               toastLength: Toast.LENGTH_SHORT,
@@ -85,9 +73,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
               backgroundColor: Colors.red,
               textColor: Colors.white,
             );
-            if (state.statusCode == 401) {
-              Navigator.pushReplacementNamed(context, "/login");
-            }
+            Navigator.pushReplacementNamed(context, "/login");
           }
         },
         child: _pages[_selectedIndex],

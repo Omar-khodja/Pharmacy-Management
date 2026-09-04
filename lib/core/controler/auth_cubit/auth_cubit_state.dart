@@ -4,21 +4,23 @@ sealed class AuthCubitState {
   const AuthCubitState();
 }
 
-class AuthInitial extends AuthCubitState {}
-
-class AuthLoading extends AuthCubitState {}
-
-class AuthSuccess extends AuthCubitState {
-  final Authstate authstate;
-
-  const AuthSuccess(this.authstate);
+class AuthInitial extends AuthCubitState {
+  const AuthInitial();
 }
 
-class AuthFailure extends AuthCubitState {
+class AuthLoading extends AuthCubitState {
+  const AuthLoading();
+}
+
+class Authorized extends AuthCubitState {
+  final Authstate authstate;
+
+  const Authorized(this.authstate);
+}
+
+class UnAuthorized extends AuthCubitState {
   final String message;
   final int? statusCode;
 
-  const AuthFailure({required this.message, this.statusCode });
+  const UnAuthorized({required this.message, this.statusCode});
 }
-
-class AuthLoggedOut extends AuthCubitState {}

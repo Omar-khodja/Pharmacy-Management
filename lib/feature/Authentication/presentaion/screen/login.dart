@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                           );
-                        } else if (state is AuthSuccess) {
+                        } else if (state is Authorized) {
                           Fluttertoast.showToast(
                             msg: "Login successful",
                             toastLength: Toast.LENGTH_SHORT,
@@ -78,14 +78,15 @@ class _LoginState extends State<Login> {
                             context,
                             "/navigation",
                           );
-                        } else if (state is AuthFailure) {
+                        } else if (state is UnAuthorized) {
+                          debugPrint(state.message);
+
                           Fluttertoast.showToast(
                             msg: state.message,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             backgroundColor: Colors.red,
                             textColor: Colors.white,
-                            
                           );
                         }
                       },
@@ -116,11 +117,15 @@ class _LoginState extends State<Login> {
                           TextFormField(
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: "Email",
-                              prefixIcon: Icon(Icons.email_outlined),
-                              border: OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.email_outlined),
+                              border: const OutlineInputBorder(),
+                              errorText: state is UnAuthorized
+                                  ? "Please check your Email"
+                                  : null,
                             ),
+
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
@@ -134,10 +139,13 @@ class _LoginState extends State<Login> {
                           TextFormField(
                             controller: _passwordController,
                             keyboardType: TextInputType.visiblePassword,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: "Password",
-                              prefixIcon: Icon(Icons.email_outlined),
-                              border: OutlineInputBorder(),
+                              prefixIcon: const Icon(Icons.email_outlined),
+                              border: const OutlineInputBorder(),
+                              errorText: state is UnAuthorized
+                                  ? "Please check your password"
+                                  : null,
                             ),
                             validator: (value) {
                               if (value == null || value.length < 6) {

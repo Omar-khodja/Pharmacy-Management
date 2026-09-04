@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:pharmacy_management/core/error/api_error_handler.dart';
 import 'package:pharmacy_management/core/network/api_client.dart';
 import 'package:pharmacy_management/core/storage/tokenstorage.dart';
 import 'package:pharmacy_management/core/usecase/longout_usecase.dart';
@@ -15,7 +14,7 @@ void initAuthFeature(GetIt sl) {
     () => AuthRepoImpl(
       datasource: sl<AuthRemoteDatasource>(),
       tokenStorage: sl<TokenStorage>(),
-      apiErrorHandler: sl<ApiErrorHandler>(),
+    
     ),
   );
   sl.registerLazySingleton(() => LoginUsecase(sl<AuthRepoImpl>()));

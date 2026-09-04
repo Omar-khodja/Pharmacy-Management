@@ -15,3 +15,7 @@ class DioFailure extends AppFailure {
 class LocalStorageFailure extends AppFailure {
   LocalStorageFailure(super.message);
 }
+
+class UnexpectedFailure extends AppFailure {
+  UnexpectedFailure(super.message);
+}
