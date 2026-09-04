@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit_state.dart';
-import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashboard_info_card.dart';
-import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashboard_medicien_card.dart';
+import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashbord_card_info.dart';
+import 'package:pharmacy_management/core/widget/medicien_card_info.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Dashboard extends StatefulWidget {
@@ -60,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
                           itemBuilder: (context, index) {
                             final medicine = Medicine.empty();
 
-                            return DashboardMedicienCard(medicine: medicine);
+                            return MedicienCardInfo(medicine: medicine);
                           },
                         ),
                       ),
@@ -99,7 +99,7 @@ class _DashboardState extends State<Dashboard> {
                           itemBuilder: (context, index) {
                             final medicine =
                                 state.dashboardData.lowStockMedicines[index];
-                            return DashboardMedicienCard(medicine: medicine);
+                            return MedicienCardInfo(medicine: medicine);
                           },
                         ),
                       ),

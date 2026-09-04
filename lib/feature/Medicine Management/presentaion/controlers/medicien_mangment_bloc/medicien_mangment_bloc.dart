@@ -20,39 +20,39 @@ class MedicienMangmentBloc
     required this.detailsUsecase,
     required this.editeUsecase,
     required this.searchUsecase,
-  }) : super(const MedicienLoading()) {
+  }) : super(const MedicieninitState()) {
     on<AddMedicineEvent>((event, emit) async {
-      emit(const MedicienLoading());
+      emit(const MedicienLoadingState());
       final result = await addUsecase.call(event.medicine);
       result.fold(
-        ifLeft: (failure) => emit(MedicienError(failure.message)),
-        ifRight: (message) => emit(SuccessfulMessage(message)),
+        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
+        ifRight: (message) => emit(SuccessfulMessageState(message)),
       );
     });
 
     on<EditMedicineEvent>((event, emit) async {
-      emit(const MedicienLoading());
+      emit(const MedicienLoadingState());
       final result = await editeUsecase.call(event.medicine);
       result.fold(
-        ifLeft: (failure) => emit(MedicienError(failure.message)),
-        ifRight: (message) => emit(SuccessfulMessage(message)),
+        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
+        ifRight: (message) => emit(SuccessfulMessageState(message)),
       );
     });
 
     on<DeleteMedicineEvent>((event, emit) async {
-      emit(const MedicienLoading());
+      emit(const MedicienLoadingState());
       final result = await deleteUsecase.call(event.id);
       result.fold(
-        ifLeft: (failure) => emit(MedicienError(failure.message)),
-        ifRight: (message) => emit(SuccessfulMessage(message)),
+        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
+        ifRight: (message) => emit(SuccessfulMessageState(message)),
       );
     });
     on<SearchMedicinesEvent>((event, emit) async {
-      emit(const MedicienLoading());
+      emit(const MedicienLoadingState());
       final result = await searchUsecase.call(event.query);
       result.fold(
-        ifLeft: (failure) => emit(MedicienError(failure.message)),
-        ifRight: (medicien) => emit(MedicienLoaded(medicien)),
+        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
+        ifRight: (medicien) => emit(MedicienLoadedState(medicien)),
       );
     });
   }

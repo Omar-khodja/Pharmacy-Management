@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/widget/bedge.dart';
 
-class DashboardMedicienCard extends StatelessWidget {
-  const DashboardMedicienCard({super.key, required this.medicine});
+class MedicienCardInfo extends StatelessWidget {
+  const MedicienCardInfo({super.key, required this.medicine});
   final Medicine medicine;
   @override
   Widget build(BuildContext context) {
@@ -20,15 +20,20 @@ class DashboardMedicienCard extends StatelessWidget {
               children: [
                 Text(
                   medicine.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFDC3545),
+                    color:
+                        medicine.isExpiringSoon
+                        ? Colors.orange
+                        : medicine.isExpired || medicine.isLowStock 
+                        ? Colors.red
+                        : Colors.green,
                   ),
                 ),
                 Text(
                   "Qty: ${medicine.quantity}",
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                  style:  TextStyle(fontSize: 14, color: medicine.isLowStock?Colors.red: Colors.black54),
                 ),
               ],
             ),
