@@ -29,7 +29,7 @@ class AuthRemoteDatasource implements BaseAuthDatasource {
   @override
   Future<String> longOut(String token) async {
     try {
-      final response = await apiClient.postWithToken(
+      final response = await apiClient.post(
         "/auth/logout",
         token,
         null,

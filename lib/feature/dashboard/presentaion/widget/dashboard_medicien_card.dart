@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/widget/bedge.dart';
 
 class DashboardMedicienCard extends StatelessWidget {
-  const DashboardMedicienCard({super.key,required this.medicine});
+  const DashboardMedicienCard({super.key, required this.medicine});
   final Medicine medicine;
   @override
   Widget build(BuildContext context) {
@@ -63,6 +62,12 @@ class DashboardMedicienCard extends StatelessWidget {
                 if (medicine.isLowStock)
                   const Bedge(
                     title: "low Quntity",
+                    icon: Icons.warning,
+                    color: Colors.red,
+                  ),
+                if (medicine.isExpired)
+                  const Bedge(
+                    title: "Expired",
                     icon: Icons.warning,
                     color: Colors.red,
                   ),

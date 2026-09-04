@@ -12,7 +12,12 @@ import 'package:pharmacy_management/splashscreen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  runApp(const MyApp());
+  runApp(
+    BlocProvider<AuthCubit>(
+      create: (_) => di.sl<AuthCubit>(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,14 +30,9 @@ class MyApp extends StatelessWidget {
       theme: Apptheme.lightTheme,
       routes: {
         "/splash": (context) => const Splashscreen(),
-        "/login": (context) => BlocProvider(
-          create: (context) => di.sl<AuthCubit>(),
-          child: const Login(),
-        ),
-        "/navigation": (context) => BlocProvider(
-          create: (context) => di.sl<AuthCubit>(),
-          child: NavigationScreen(sl: di.sl),
-        ),
+        "/login": (context) => const Login(),
+
+        "/navigation": (context) => NavigationScreen(sl: di.sl),
       },
       initialRoute: "/splash",
     );

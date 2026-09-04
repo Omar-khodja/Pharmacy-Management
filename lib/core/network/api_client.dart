@@ -21,7 +21,7 @@ class ApiClient {
     }
   }
 
-  Future<Response> getWithToken(String endpoint, String token) async {
+  Future<Response> get(String endpoint, String token) async {
     try {
       final response = await dio.get(
         endpoint,
@@ -39,7 +39,7 @@ class ApiClient {
     }
   }
 
-  Future<Response> postWithToken(
+  Future<Response> post(
     String endpoint,
     String token,
     Map<String, dynamic>? body,
@@ -48,6 +48,50 @@ class ApiClient {
       final response = await dio.post(
         endpoint,
         data: body,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        ),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<Response> put(
+    String endpoint,
+    String token,
+    Map<String, dynamic>? body,
+  ) async {
+    try {
+      final response = await dio.put(
+        endpoint,
+        data: body,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        ),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+   Future<Response> delete(
+    String endpoint,
+    String token,
+  ) async {
+    try {
+      final response = await dio.delete(
+        endpoint,
         options: Options(
           headers: {
             "Authorization": "Bearer $token",
@@ -82,7 +126,7 @@ class ApiClient {
       case "401":
         return "Unauthorized - token expired";
       case "403":
-        return "Account inactive.";
+        return "You Account is inactive.";
       case "404":
         return "Resource not found.";
       case "422":
