@@ -117,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
                           child: Center(
                             child: Text(
                               message,
-                              style: const TextStyle(color: Colors.red),
+                              style: const TextStyle(color: Colors.red,fontSize: 28,fontWeight: .bold),
                             ),
                           ),
                         ),

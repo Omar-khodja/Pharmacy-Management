@@ -10,15 +10,13 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
   @override
   Future<String> addMedicien(MedicienModel medicien, String token) async {
     try {
-      final respons = await apiClient.post(
+       await apiClient.post(
         "/medicines",
         token,
         medicien.toAddJson(),
       );
-      debugPrint("////////////////// add ${respons.data.toString()}");
       return "Medicien Added Successfully";
     } catch (e) {
-      debugPrint("////////////////// add ${e.toString()}");
 
       rethrow;
     }

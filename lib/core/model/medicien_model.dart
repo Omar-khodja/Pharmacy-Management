@@ -35,19 +35,19 @@ class MedicienModel extends Medicine {
   }
   Map<String, dynamic> toAddJson() {
     return {
-      "categoryId": categoryId,
       "name": name,
+      "category_id": categoryId,
       "price": price,
       "quantity": quantity,
-      "expiryDate": expiryDate.toIso8601String(),
+      "expiry_date": expiryDate.toString(),
     };
   }
   Map<String, dynamic> toEditJson() {
     return {
-      "categoryId": categoryId,
       "name": name,
+      "category_id": categoryId,
       "price": price,
-      "expiryDate": expiryDate.toIso8601String(),
+      "expiry_date": expiryDate.toString(),
     };
   }
 

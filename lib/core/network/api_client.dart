@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
 import 'package:pharmacy_management/core/network/AuthInterceptor.dart';
 
@@ -17,6 +18,7 @@ class ApiClient {
       final response = await dio.post("/auth/login", data: data);
       return response;
     } on DioException catch (e) {
+
       throw _handleError(e);
     }
   }
@@ -107,11 +109,18 @@ class ApiClient {
   }
 
   Exception _handleError(DioException e) {
+    debugPrint("DioException type: ${e.type}");
+    debugPrint("DioException message: ${e.message}");
+    debugPrint("DioException response: ${e.response}");
+    debugPrint("Stacktrace: $e");
+
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.sendTimeout ||
         e.type == DioExceptionType.cancel) {
-      return AppDioException("Network error ${e.message}");
+      return AppDioException(
+        "Network error, Please Check Your Internet Conection  ",
+      );
     } else if (e.type == DioExceptionType.badResponse) {
       final statusCode = e.response?.statusCode;
       final message = _apiErrorhandler(statusCode.toString());

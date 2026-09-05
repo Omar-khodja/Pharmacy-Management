@@ -43,6 +43,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+              final medicienBloc = context.read<MedicienMangmentBloc>();
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -61,7 +62,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
                           CategoryCubit(getCategoryUseCase: di.sl()),
                     ),
                     BlocProvider.value(
-                      value: context.read<MedicienMangmentBloc>(),
+                      value: medicienBloc,
                     ),
                   ],
                   child: const AddMedicienForm(),
@@ -137,7 +138,16 @@ class _MedicineManagementState extends State<MedicineManagement> {
                           ),
                         );
                       } else if (state is MedicienErrorState) {
-                        return Center(child: Text(state.errorMessage));
+                        return Center(
+                          child: Text(
+                            state.errorMessage,
+                            style: const TextStyle(
+                              color: Colors.red,
+                              fontSize: 28,
+                              fontWeight: .bold,
+                            ),
+                          ),
+                        );
                       } else if (state is SuccessfulMessageState) {
                         if (state.medicines.isEmpty) {
                           return const Center(child: Text("No Result Found"));
