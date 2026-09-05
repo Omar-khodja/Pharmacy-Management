@@ -7,6 +7,7 @@ import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/delete_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/details_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/edite_usecase.dart';
+import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/get_category_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/search_usecase.dart';
 
 void initMedicienMangmentFeature(GetIt sl) {
@@ -19,7 +20,7 @@ void initMedicienMangmentFeature(GetIt sl) {
       tokenStorage: sl<TokenStorage>(),
     ),
   );
-
+  sl.registerLazySingleton(() => GetCategoryUseCase(sl<MedicienMRepoImpl>()));
   sl.registerLazySingleton(() => AddUsecase(sl<MedicienMRepoImpl>()));
   sl.registerLazySingleton(() => DeleteUsecase(sl<MedicienMRepoImpl>()));
   sl.registerLazySingleton(() => EditeUsecase(sl<MedicienMRepoImpl>()));

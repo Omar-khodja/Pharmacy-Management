@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pharmacy_management/core/model/category_model.dart';
 import 'package:pharmacy_management/core/model/medicien_model.dart';
 import 'package:pharmacy_management/core/network/api_client.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/data/data_source.dart/base_medicien_m_datasource.dart';
@@ -12,11 +13,13 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
       final respons = await apiClient.post(
         "/medicines",
         token,
-        medicien.toPostJson(),
+        medicien.toAddJson(),
       );
-      debugPrint(respons.data.toString());
+      debugPrint("////////////////// add ${respons.data.toString()}");
       return "Medicien Added Successfully";
     } catch (e) {
+      debugPrint("////////////////// add ${e.toString()}");
+
       rethrow;
     }
   }
@@ -42,7 +45,7 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
       final respons = await apiClient.put(
         "/medicines/$id",
         token,
-        medicien.toPostJson(),
+        medicien.toEditJson(),
       );
       debugPrint(respons.data.toString());
       return "Medicien Updated Successfully";
@@ -77,6 +80,23 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
       return data.map((json) => MedicienModel.fromJson(json)).toList();
     } catch (e) {
       debugPrint("/////////////////////////////////// search ${e.toString()}");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<CategoryModel>> getCategory(String token) async {
+    try {
+      final respons = await apiClient.get("/categories", token);
+      debugPrint(
+        "/////////////////////////////////// category ${respons.data["data"]}",
+      );
+      final List data = respons.data['data'] as List;
+      return data.map((json) => CategoryModel.fromJson(json)).toList();
+    } catch (e) {
+      debugPrint(
+        "/////////////////////////////////// category ${e.toString()}",
+      );
       rethrow;
     }
   }

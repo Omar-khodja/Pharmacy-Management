@@ -105,12 +105,25 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ],
                   ),
-                DashboardFailureState(message: final message) => Center(
-                  child: Text(
-                    message,
-                    style: const TextStyle(color: Colors.red),
+                DashboardFailureState(message: final message) =>
+                  RefreshIndicator(
+                    onRefresh: () =>
+                        context.read<DashboardCubit>().getDashboardData(),
+                    child: ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.7,
+                          child: Center(
+                            child: Text(
+                              message,
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               };
             },
           ),

@@ -18,7 +18,9 @@ class MedicienLoadedState extends MedicienMangmentBlocState {
 }
 class SuccessfulMessageState extends MedicienMangmentBlocState {
   final String message;
-  const SuccessfulMessageState(this.message);
+    final List<Medicine> medicines;
+
+  const SuccessfulMessageState({required this.message,required this.medicines});
 }
 
 

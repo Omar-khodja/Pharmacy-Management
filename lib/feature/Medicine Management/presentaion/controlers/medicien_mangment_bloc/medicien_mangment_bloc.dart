@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/add_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/delete_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/details_usecase.dart';
@@ -22,29 +23,47 @@ class MedicienMangmentBloc
     required this.searchUsecase,
   }) : super(const MedicieninitState()) {
     on<AddMedicineEvent>((event, emit) async {
-      emit(const MedicienLoadingState());
       final result = await addUsecase.call(event.medicine);
+      final currentMedicines = state is MedicienLoadedState
+          ? (state as MedicienLoadedState).medicines
+          : state is SuccessfulMessageState
+          ? (state as SuccessfulMessageState).medicines
+          : <Medicine>[];
       result.fold(
         ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
-        ifRight: (message) => emit(SuccessfulMessageState(message)),
+        ifRight: (message) => emit(
+          SuccessfulMessageState(message: message, medicines: currentMedicines),
+        ),
       );
     });
 
     on<EditMedicineEvent>((event, emit) async {
-      emit(const MedicienLoadingState());
       final result = await editeUsecase.call(event.medicine);
+      final currentMedicines = state is MedicienLoadedState
+          ? (state as MedicienLoadedState).medicines
+          : state is SuccessfulMessageState
+          ? (state as SuccessfulMessageState).medicines
+          : <Medicine>[];
       result.fold(
         ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
-        ifRight: (message) => emit(SuccessfulMessageState(message)),
+        ifRight: (message) => emit(
+          SuccessfulMessageState(message: message, medicines: currentMedicines),
+        ),
       );
     });
 
     on<DeleteMedicineEvent>((event, emit) async {
-      emit(const MedicienLoadingState());
-      final result = await deleteUsecase.call(event.id);
-      result.fold(
-        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
-        ifRight: (message) => emit(SuccessfulMessageState(message)),
+      final currentMedicines = state is MedicienLoadedState
+          ? (state as MedicienLoadedState).medicines
+          : state is SuccessfulMessageState
+          ? (state as SuccessfulMessageState).medicines
+          : <Medicine>[];
+      final updatedMedicines = currentMedicines
+          .where((m) => m.id != event.id)
+          .toList();
+      currentMedicines.removeWhere((element) => element.id == event.id);
+      emit(
+        SuccessfulMessageState(message: "message", medicines: updatedMedicines),
       );
     });
     on<SearchMedicinesEvent>((event, emit) async {

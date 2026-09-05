@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Bedge extends StatelessWidget {
-  const Bedge({
+class TextBedge extends StatelessWidget {
+  const TextBedge({
     super.key,
     required this.title,
     required this.icon,

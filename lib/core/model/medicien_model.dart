@@ -33,12 +33,20 @@ class MedicienModel extends Medicine {
       isExpiringSoon: json['is_expiring_soon'],
     );
   }
-  Map<String, dynamic> toPostJson() {
+  Map<String, dynamic> toAddJson() {
     return {
       "categoryId": categoryId,
       "name": name,
       "price": price,
       "quantity": quantity,
+      "expiryDate": expiryDate.toIso8601String(),
+    };
+  }
+  Map<String, dynamic> toEditJson() {
+    return {
+      "categoryId": categoryId,
+      "name": name,
+      "price": price,
       "expiryDate": expiryDate.toIso8601String(),
     };
   }

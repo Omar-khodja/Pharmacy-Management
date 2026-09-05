@@ -1,4 +1,5 @@
 import 'package:dart_either/src/dart_either.dart';
+import 'package:pharmacy_management/core/entities/category.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
 import 'package:pharmacy_management/core/error/failure.dart';
@@ -38,15 +39,13 @@ class MedicienMRepoImpl implements BaseMedicienMRepo {
   }
 
   @override
-  Future<Either<AppFailure, String>> editeMedicien(
-    Medicine medicien,
-  ) async {
+  Future<Either<AppFailure, String>> editeMedicien(Medicine medicien) async {
     try {
       final token = await tokenStorage.getToken();
       await datasource.editeMedicien(
         MedicienModel.fromEntitiy(medicien),
         token!,
-        medicien.id,
+        medicien.id!,
       );
       return const Right("The modification was successful");
     } on RemoteException catch (e) {
@@ -75,6 +74,19 @@ class MedicienMRepoImpl implements BaseMedicienMRepo {
       final token = await tokenStorage.getToken();
       final response = await datasource.search(query, token!);
       return Right(response);
+    } on RemoteException catch (e) {
+      return Left(RemoteFailure(message: e.message, statusCode: e.statusCode));
+    } on AppDioException catch (e) {
+      return Left(DioFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, List<Category>>> getCategory() async {
+    try {
+      final token = await tokenStorage.getToken();
+      final response = await datasource.getCategory(token!);
+      return  Right(response);
     } on RemoteException catch (e) {
       return Left(RemoteFailure(message: e.message, statusCode: e.statusCode));
     } on AppDioException catch (e) {

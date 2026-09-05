@@ -86,7 +86,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             Navigator.pushReplacementNamed(context, "/login");
           }
         },
-        child: _pages[_selectedIndex],
+        child: IndexedStack(index: _selectedIndex, children: _pages),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
