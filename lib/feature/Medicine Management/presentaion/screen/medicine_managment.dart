@@ -26,6 +26,8 @@ class _MedicineManagementState extends State<MedicineManagement> {
   void initState() {
     super.initState();
     context.read<MedicienMangmentBloc>().add(const SearchMedicinesEvent(" "));
+
+
   }
 
   Timer? _debounce;
@@ -43,7 +45,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-              final medicienBloc = context.read<MedicienMangmentBloc>();
+          final medicienBloc = context.read<MedicienMangmentBloc>();
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -61,9 +63,7 @@ class _MedicineManagementState extends State<MedicineManagement> {
                       create: (context) =>
                           CategoryCubit(getCategoryUseCase: di.sl()),
                     ),
-                    BlocProvider.value(
-                      value: medicienBloc,
-                    ),
+                    BlocProvider.value(value: medicienBloc),
                   ],
                   child: const AddMedicienForm(),
                 ),

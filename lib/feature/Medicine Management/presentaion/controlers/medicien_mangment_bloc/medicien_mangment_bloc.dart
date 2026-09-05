@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/add_usecase.dart';
@@ -86,6 +87,18 @@ class MedicienMangmentBloc
       result.fold(
         ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
         ifRight: (medicien) => emit(MedicienLoadedState(medicien)),
+      );
+    });
+    on<GetMedicineDetailsEvent>((event, emit) async {
+      emit(const MedicienLoadingState());
+      final result = await detailsUsecase.call(int.parse(event.id));
+      result.fold(
+        ifLeft: (failure) => debugPrint(
+          "///////////////////////////////////////${failure.toString()}",
+        ),
+        ifRight: (medicien) => debugPrint(
+          "///////////////////////////////////////${medicien.toString()}",
+        ),
       );
     });
   }

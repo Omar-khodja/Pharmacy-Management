@@ -119,9 +119,8 @@
                     lastDate: DateTime(2100),
                   );
                   if (picked != null) {
-                    final formattedDate = DateFormat('yyyy/MM/dd').format(picked);
                     setState(() {
-                      _expiryDate.text = formattedDate;
+                      _expiryDate.text = picked.toString();
                     });
                   }
                 },
