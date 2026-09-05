@@ -45,6 +45,36 @@ class Medicine extends Equatable {
       isExpiringSoon: false,
     );
   }
+    /// ✅ CopyWith method
+  Medicine copyWith({
+    int? id,
+    String? name,
+    int? categoryId,
+    Category? category,
+    double? price,
+    int? quantity,
+    int? minStockLevel,
+    DateTime? expiryDate,
+    String? expiryStatus,
+    bool? isLowStock,
+    bool? isExpired,
+    bool? isExpiringSoon,
+  }) {
+    return Medicine(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      categoryId: categoryId ?? this.categoryId,
+      category: category ?? this.category,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      minStockLevel: minStockLevel ?? this.minStockLevel,
+      expiryDate: expiryDate ?? this.expiryDate,
+      expiryStatus: expiryStatus ?? this.expiryStatus,
+      isLowStock: isLowStock ?? this.isLowStock,
+      isExpired: isExpired ?? this.isExpired,
+      isExpiringSoon: isExpiringSoon ?? this.isExpiringSoon,
+    );
+  }
 
   @override
   List<Object?> get props => [

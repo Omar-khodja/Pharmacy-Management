@@ -44,11 +44,25 @@ class MedicienMangmentBloc
           : state is SuccessfulMessageState
           ? (state as SuccessfulMessageState).medicines
           : <Medicine>[];
+
       result.fold(
         ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
-        ifRight: (message) => emit(
-          SuccessfulMessageState(message: message, medicines: currentMedicines),
-        ),
+        ifRight: (message) {
+          final updatedList = currentMedicines.map((item) {
+            return item.id == event.medicine.id
+                ? item.copyWith(
+                    name: event.medicine.name,
+                    expiryDate: event.medicine.expiryDate,
+                    category: event.medicine.category,
+                    price: event.medicine.price,
+                    categoryId: event.medicine.categoryId,
+                  )
+                : item;
+          }).toList();
+          emit(
+            SuccessfulMessageState(message: message, medicines: updatedList),
+          );
+        },
       );
     });
 

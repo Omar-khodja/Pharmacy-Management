@@ -4,8 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/core/widget/Textbedge.dart';
 import 'package:pharmacy_management/core/widget/custom_iconbutton.dart';
+import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/category_cubit/category_cubit.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
+import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
+    as di;
+import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/edit_medicien_form.dart';
 
 class MedicienCardInfo extends StatelessWidget {
   const MedicienCardInfo({
@@ -75,9 +79,20 @@ class MedicienCardInfo extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              "Category: ${medicine.category!.name}",
+              "Category: ${medicine.category!.name} / ${medicine.category!.nameAr}",
               style: const TextStyle(color: Colors.black87),
             ),
+            const SizedBox(height: 6),
+
+            Text(
+              "Price: ${medicine.price.toStringAsFixed(2)} DA", // or $ depending on your currency
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 6),
 
             Text(
               "Expiry: ${DateFormat("yyyy-mm-dd").format(medicine.expiryDate)}",
@@ -119,7 +134,37 @@ class MedicienCardInfo extends StatelessWidget {
               Row(
                 mainAxisAlignment: .end,
                 children: [
-                  CustomIconbutton(icon: Icons.edit_outlined, onTab: () {}),
+                  CustomIconbutton(
+                    icon: Icons.edit_outlined,
+                    onTab: () {
+                      final medicienBloc = context.read<MedicienMangmentBloc>();
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                              left: 16,
+                              right: 16,
+                              top: 16,
+                            ),
+                            child: MultiBlocProvider(
+                              providers: [
+                                BlocProvider(
+                                  create: (context) => CategoryCubit(
+                                    getCategoryUseCase: di.sl(),
+                                  ),
+                                ),
+                                BlocProvider.value(value: medicienBloc),
+                              ],
+                              child: EditMedicienForm(medicine: medicine),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                   const SizedBox(width: 8),
                   CustomIconbutton(
                     icon: Icons.delete_outline,
