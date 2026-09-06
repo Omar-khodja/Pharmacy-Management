@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy_management/feature/Sales/domain/entities/sale_entity.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/screen/sale_details_screen.dart';
 
 class InvoiceCard extends StatelessWidget {
-  const InvoiceCard({super.key,required this.sale});
+  const InvoiceCard({super.key, required this.sale,required this.showButton});
   final SaleEntity sale;
+  final bool showButton;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
+      color: Theme.of(context).colorScheme.surfaceContainer,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -16,7 +19,6 @@ class InvoiceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Invoice number and status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -35,18 +37,31 @@ class InvoiceCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                   sale. status,
+                    sale.status,
                     style: const TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
+                if(showButton)
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SaleDetailsScreen(sale: sale),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.keyboard_arrow_right),
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.grey.withValues(alpha: .2),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 12),
 
-            // Cashier info
             Row(
               children: [
                 CircleAvatar(
@@ -65,7 +80,7 @@ class InvoiceCard extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      sale.createdAt.toIso8601String(),
+                      sale.createdAt.toString().substring(0, 10),
                       style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 12,
@@ -77,28 +92,31 @@ class InvoiceCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.attach_money, color: Colors.green),
-                    const SizedBox(width: 6),
-                    Text(
-                      "${sale.paymentMethod} • Subtotal: \$${sale.subtotal.toStringAsFixed(2)}",
-                      style: TextStyle(color: Colors.grey.shade700),
-                    ),
-                  ],
-                ),
-                Text(
-                  "\$${sale.total.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+            Chip(
+              backgroundColor: Colors.grey.withValues(alpha: .2),
+              label: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.attach_money, color: Colors.green),
+                      const SizedBox(width: 6),
+                      Text(
+                        "${sale.paymentMethod} • Subtotal: ${sale.subtotal.toStringAsFixed(0)} DZ",
+                        style: TextStyle(color: Colors.grey.shade700),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  Text(
+                    "${sale.total.toStringAsFixed(0)} DZ",
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

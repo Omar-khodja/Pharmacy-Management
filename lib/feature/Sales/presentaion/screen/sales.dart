@@ -40,7 +40,7 @@ class _SalesState extends State<Sales> {
                   : ListView.builder(
                       itemCount: state.sales.length,
                       itemBuilder: (context, index) {
-                        return InvoiceCard(sale: state.sales[index]);
+                        return InvoiceCard(sale: state.sales[index],showButton: true,);
                       },
                     ),
             SaleLoding() => const Center(child: CircularProgressIndicator()),
