@@ -4,9 +4,9 @@ class MedicienSaleModel extends MedicineSale {
   const new({required super.id, required super.name, required super.unit});
   factory MedicienSaleModel.fromJson(Map<String, dynamic> json) {
     return MedicienSaleModel(
-      id: json['id'],
-      name: json['name'],
-      unit: json['unit'],
+      id: json['id'] ?? 0 ,
+      name: json['name'] ?? 'Unkown',
+      unit: json['unit'] ?? 'Unkown',
     );
   }
 }

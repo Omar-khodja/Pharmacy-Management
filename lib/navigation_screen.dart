@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
@@ -9,17 +8,16 @@ import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.d
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
-import 'package:pharmacy_management/feature/Sales/data/data_source.dart/sales_datasource.dart';
-import 'package:pharmacy_management/feature/Sales/data/repo/sales_repo_impl.dart';
-import 'package:pharmacy_management/feature/Sales/domain/repo/sales_repo.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/bloc/sale_bloc.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
 import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/screen/dashboard.dart';
+import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
+    as di;
 
 class NavigationScreen extends StatefulWidget {
-  const NavigationScreen({super.key, required this.sl});
-  final GetIt sl;
+  const NavigationScreen({super.key});
 
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();
@@ -41,32 +39,28 @@ class _NavigationScreenState extends State<NavigationScreen> {
     _pages = [
       BlocProvider(
         create: (context) => DashboardCubit(
-          getDashBoardDataUseCase: widget.sl<GetDashBoardDataUseCase>(),
+          getDashBoardDataUseCase: di.sl<GetDashBoardDataUseCase>(),
         ),
 
         child: const Dashboard(),
       ),
       BlocProvider(
         create: (context) => MedicienMangmentBloc(
-          addUsecase: widget.sl(),
-          deleteUsecase: widget.sl(),
-          detailsUsecase: widget.sl(),
-          editeUsecase: widget.sl(),
-          searchUsecase: widget.sl(),
+          addUsecase: di.sl(),
+          deleteUsecase: di.sl(),
+          detailsUsecase: di.sl(),
+          editeUsecase: di.sl(),
+          searchUsecase: di.sl(),
         ),
         child: const MedicineManagement(),
       ),
-      const Sales(),
+      BlocProvider(
+        create: (context) =>
+            SaleBloc(getSaleDetailsUsecase: di.sl(), getSalesUsecase: di.sl()),
+        child: const Sales(),
+      ),
       const Inventory(),
     ];
-  }
-
-  void sales() {
-    final SalesRepoImpl sales = SalesRepoImpl(
-      datasource: SalesDatasource(apiClient: widget.sl()),
-      tokenStorage: widget.sl(),
-    );
-    sales.getSaleDetails(3  );
   }
 
   @override
@@ -79,8 +73,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         actions: [
           ElevatedButton(
             onPressed: () {
-              /* context.read<AuthCubit>().logout(); */
-              sales();
+              context.read<AuthCubit>().logout();
             },
             child: const Text("Logout"),
           ),

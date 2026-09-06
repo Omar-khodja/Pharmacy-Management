@@ -4,6 +4,6 @@ class CashierModel extends Cashier {
   const new({required super.id, required super.name});
 
     factory CashierModel.fromJson(Map<String, dynamic> json) {
-    return CashierModel(id: json['id'], name: json['name']);
+    return CashierModel(id: json['id'] , name: json['name']  );
   }
 }

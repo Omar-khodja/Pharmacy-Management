@@ -1,11 +1,9 @@
 import 'package:dart_either/dart_either.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
 import 'package:pharmacy_management/core/error/failure.dart';
 import 'package:pharmacy_management/core/storage/tokenstorage.dart';
 import 'package:pharmacy_management/feature/Sales/data/data_source.dart/baes_sales_datasource.dart';
-import 'package:pharmacy_management/feature/Sales/domain/entities/sale.dart';
+import 'package:pharmacy_management/feature/Sales/domain/entities/sale_entity.dart';
 import 'package:pharmacy_management/feature/Sales/domain/repo/sales_repo.dart';
 
 class SalesRepoImpl implements SalesRepo {
@@ -18,7 +16,7 @@ class SalesRepoImpl implements SalesRepo {
   }
 
   @override
-  Future<Either<AppFailure, Sale>> getSaleDetails(int id) async {
+  Future<Either<AppFailure, SaleEntity>> getSaleDetails(int id) async {
     try {
       final token = await tokenStorage.getToken();
       final response = await datasource.fetchSaleDetails(id, token!);
@@ -31,7 +29,7 @@ class SalesRepoImpl implements SalesRepo {
   }
 
   @override
-  Future<Either<AppFailure, List<Sale>>> getSales() async {
+  Future<Either<AppFailure, List<SaleEntity>>> getSales() async {
     try {
       final token = await tokenStorage.getToken();
       final response = await datasource.fetchSales(token!);

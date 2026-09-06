@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pharmacy_management/core/network/api_client.dart';
 import 'package:pharmacy_management/feature/Sales/data/data_source.dart/baes_sales_datasource.dart';
 import 'package:pharmacy_management/feature/Sales/data/model/sale_model.dart';
@@ -7,9 +8,9 @@ class SalesDatasource extends BaesSalesDatasource {
   final ApiClient apiClient;
   @override
   Future<SaleModel> fetchSaleDetails(int id, String token) async {
-     try {
+    try {
       final response = await apiClient.get("/sales/$id", token);
-      final  json = response.data["data"];
+      final json = response.data["data"];
       return SaleModel.fromJson(json);
     } catch (e) {
       rethrow;

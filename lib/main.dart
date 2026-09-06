@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         "/splash": (context) => const Splashscreen(),
         "/login": (context) => const Login(),
 
-        "/navigation": (context) => NavigationScreen(sl: di.sl),
+        "/navigation": (context) => const NavigationScreen(),
       },
       initialRoute: "/splash",
     );

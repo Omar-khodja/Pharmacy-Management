@@ -4,6 +4,7 @@ import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/core/dependnce_injection/init_auth_feature.dart';
 import 'package:pharmacy_management/core/dependnce_injection/init_dashboard_feature.dart';
 import 'package:pharmacy_management/core/dependnce_injection/init_medicien_mangment_feature.dart';
+import 'package:pharmacy_management/core/dependnce_injection/init_sales_feature.dart';
 import 'package:pharmacy_management/core/network/api_client.dart';
 import 'package:pharmacy_management/core/storage/tokenstorage.dart';
 
@@ -28,4 +29,5 @@ Future<void> init() async {
   initAuthFeature(sl);
   initDashboardFeature(sl);
   initMedicienMangmentFeature(sl);
+  initSalesFeature(sl);
 }
