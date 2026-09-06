@@ -15,7 +15,7 @@ class SaleDetailsScreen extends StatelessWidget {
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,
         children: [
-          InvoiceCard(sale: sale,showButton: false,),
+          InvoiceCard(sale: sale, showButton: false),
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
@@ -26,7 +26,7 @@ class SaleDetailsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const Divider(thickness: 0.5,color: Colors.grey,),
+          const Divider(thickness: 0.5, color: Colors.grey),
 
           const SizedBox(height: 8),
           if (sale.items != null)

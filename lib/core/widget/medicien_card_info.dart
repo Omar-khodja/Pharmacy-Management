@@ -5,8 +5,8 @@ import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/core/widget/Textbedge.dart';
 import 'package:pharmacy_management/core/widget/custom_iconbutton.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/category_cubit/category_cubit.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
 import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
     as di;
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/edit_medicien_form.dart';
@@ -16,9 +16,12 @@ class MedicienCardInfo extends StatelessWidget {
     super.key,
     required this.medicine,
     this.showButtons = false,
+    this.showquntitybutton = false,
   });
   final Medicine medicine;
   final bool showButtons;
+  final bool showquntitybutton;
+
   void _onDelete(BuildContext context) {
     showDialog(
       context: context,
@@ -104,6 +107,7 @@ class MedicienCardInfo extends StatelessWidget {
                     : Colors.green,
               ),
             ),
+           
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: .start,
@@ -130,6 +134,33 @@ class MedicienCardInfo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
+            const SizedBox(height: 8),
+            if (showquntitybutton)
+              Container(
+                width: 132,
+                height: 53,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: () {},
+                    ),
+                    Text(
+                      '0',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    IconButton(icon: const Icon(Icons.add), onPressed: () {}),
+                  ],
+                ),
+              ),
             if (showButtons)
               Row(
                 mainAxisAlignment: .end,

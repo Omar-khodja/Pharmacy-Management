@@ -70,9 +70,7 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
         "/medicines?q=$query",
         token,
       );
-      debugPrint(
-        "/////////////////////////////////// search ${respons.data.toString()}",
-      );
+
       final List data = respons.data['data'] as List;
       return data.map((json) => MedicienModel.fromJson(json)).toList();
     } catch (e) {
@@ -85,9 +83,7 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
   Future<List<CategoryModel>> getCategory(String token) async {
     try {
       final respons = await apiClient.get("/categories", token);
-      debugPrint(
-        "/////////////////////////////////// category ${respons.data["data"]}",
-      );
+ 
       final List data = respons.data['data'] as List;
       return data.map((json) => CategoryModel.fromJson(json)).toList();
     } catch (e) {

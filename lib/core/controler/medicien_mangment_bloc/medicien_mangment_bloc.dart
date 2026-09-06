@@ -6,8 +6,8 @@ import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/details_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/edite_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/search_usecase.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc_state.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_state.dart';
 
 class MedicienMangmentBloc
     extends Bloc<MedicienMangmentBlocEvent, MedicienMangmentBlocState> {

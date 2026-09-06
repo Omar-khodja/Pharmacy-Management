@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/core/theme/apptheme.dart';
 
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
@@ -13,8 +14,19 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(
-    BlocProvider<AuthCubit>(
-      create: (_) => di.sl<AuthCubit>(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(create: (_) => di.sl<AuthCubit>()),
+        BlocProvider<MedicienMangmentBloc>(
+          create: (_) => MedicienMangmentBloc(
+            addUsecase: di.sl(),
+            deleteUsecase: di.sl(),
+            detailsUsecase: di.sl(),
+            editeUsecase: di.sl(),
+            searchUsecase: di.sl(),
+          ),
+        ),
+      ],
       child: const MyApp(),
     ),
   );

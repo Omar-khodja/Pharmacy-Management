@@ -11,4 +11,3 @@ final class GetSalesList extends SaleEvent {}
 
 
 
-final class PostSale extends SaleEvent {}

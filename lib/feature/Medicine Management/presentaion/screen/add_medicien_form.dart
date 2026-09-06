@@ -7,8 +7,8 @@ import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/core/widget/primary_elevatedbutton.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/category_cubit/category_cubit.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/category_cubit/category_cubit_state.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AddMedicienForm extends StatefulWidget {

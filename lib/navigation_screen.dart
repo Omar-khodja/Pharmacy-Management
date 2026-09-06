@@ -6,7 +6,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
-import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/bloc/sale_bloc.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
@@ -44,21 +44,22 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
         child: const Dashboard(),
       ),
-      BlocProvider(
-        create: (context) => MedicienMangmentBloc(
-          addUsecase: di.sl(),
-          deleteUsecase: di.sl(),
-          detailsUsecase: di.sl(),
-          editeUsecase: di.sl(),
-          searchUsecase: di.sl(),
-        ),
+      BlocProvider.value(
+        value: context.read<MedicienMangmentBloc>(),
         child: const MedicineManagement(),
       ),
-      BlocProvider(
-        create: (context) =>
-            SaleBloc(getSaleDetailsUsecase: di.sl(), getSalesUsecase: di.sl()),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SaleBloc(
+              getSaleDetailsUsecase: di.sl(),
+              getSalesUsecase: di.sl(),
+            ),
+          ),
+        ],
         child: const Sales(),
       ),
+
       const Inventory(),
     ];
   }

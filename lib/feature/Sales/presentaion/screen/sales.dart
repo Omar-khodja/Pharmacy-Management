@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/bloc/sale_bloc.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/screen/new_sale_screen.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/widget/Invoice_card.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class Sales extends StatefulWidget {
   const Sales({super.key});
@@ -21,6 +24,23 @@ class _SalesState extends State<Sales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: context.read<MedicienMangmentBloc>(),
+                child: const NewSaleScreen(),
+              ),
+            ),
+          );
+        },
+        label: const Row(
+          mainAxisSize: .min,
+          children: [Text("New Sale"), Icon(Icons.add)],
+        ),
+        heroTag: "newSales",
+      ),
       body: BlocConsumer<SaleBloc, SaleState>(
         listener: (context, state) {
           if (state is SaleListData) {
@@ -40,10 +60,21 @@ class _SalesState extends State<Sales> {
                   : ListView.builder(
                       itemCount: state.sales.length,
                       itemBuilder: (context, index) {
-                        return InvoiceCard(sale: state.sales[index],showButton: true,);
+                        return InvoiceCard(
+                          sale: state.sales[index],
+                          showButton: true,
+                        );
                       },
                     ),
-            SaleLoding() => const Center(child: CircularProgressIndicator()),
+            SaleLoding() => const Skeletonizer(
+              child: Column(
+                children: [
+                  ListTile(title: Text("data"), subtitle: Text("data")),
+                  ListTile(title: Text("data"), subtitle: Text("data")),
+                  ListTile(title: Text("data"), subtitle: Text("data")),
+                ],
+              ),
+            ),
           };
         },
       ),

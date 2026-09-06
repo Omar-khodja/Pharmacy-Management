@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/feature/Sales/domain/entities/sale_entity.dart';
 import 'package:pharmacy_management/feature/Sales/domain/usecase/get_sale_details_usecase.dart';
@@ -19,10 +18,10 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
         ifLeft: (message) =>
             emit(SaleListData(sales: const [], errorMessage: message.message)),
         ifRight: (sales) {
-          debugPrint("/////////////sales ${sales.toString()}");
           emit(SaleListData(sales: sales));
         },
       );
     });
+
   }
 }

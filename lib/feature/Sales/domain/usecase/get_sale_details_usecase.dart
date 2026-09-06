@@ -6,7 +6,7 @@ import 'package:pharmacy_management/feature/Sales/domain/repo/sales_repo.dart';
 class GetSaleDetailsUsecase {
   final SalesRepo repo;
   new({required this.repo});
-  Future<Either<AppFailure, SaleEntity>> call(int id) {
-    return repo.getSaleDetails(id);
+  Future<Either<AppFailure, SaleEntity>> call(int id) async{
+    return await repo.getSaleDetails(id);
   }
 }
