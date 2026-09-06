@@ -9,6 +9,9 @@ import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.d
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
+import 'package:pharmacy_management/feature/Sales/data/data_source.dart/sales_datasource.dart';
+import 'package:pharmacy_management/feature/Sales/data/repo/sales_repo_impl.dart';
+import 'package:pharmacy_management/feature/Sales/domain/repo/sales_repo.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
 import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
@@ -34,6 +37,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   initState() {
     super.initState();
+
     _pages = [
       BlocProvider(
         create: (context) => DashboardCubit(
@@ -57,6 +61,14 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ];
   }
 
+  void sales() {
+    final SalesRepoImpl sales = SalesRepoImpl(
+      datasource: SalesDatasource(apiClient: widget.sl()),
+      tokenStorage: widget.sl(),
+    );
+    sales.getSaleDetails(3  );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +79,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
         actions: [
           ElevatedButton(
             onPressed: () {
-              context.read<AuthCubit>().logout();
+              /* context.read<AuthCubit>().logout(); */
+              sales();
             },
             child: const Text("Logout"),
           ),
