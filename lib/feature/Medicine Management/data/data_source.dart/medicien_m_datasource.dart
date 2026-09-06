@@ -56,7 +56,6 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
   Future<MedicienModel> getDetails(String id, String token) async {
     try {
       final respons = await apiClient.get("/medicines/$id", token);
-      debugPrint(respons.data.toString());
       final data = respons.data['data'] as Map<String, dynamic>;
       return MedicienModel.fromJson(data);
     } catch (e) {

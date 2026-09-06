@@ -1,7 +1,6 @@
   import 'package:flutter/material.dart';
   import 'package:flutter_bloc/flutter_bloc.dart';
   import 'package:fluttertoast/fluttertoast.dart';
-  import 'package:intl/intl.dart';
   import 'package:pharmacy_management/core/entities/category.dart';
   import 'package:pharmacy_management/core/entities/medicien.dart';
   import 'package:pharmacy_management/core/widget/primary_elevatedbutton.dart';
