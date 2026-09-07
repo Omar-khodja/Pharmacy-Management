@@ -12,12 +12,14 @@ class Apptheme {
       onSecondary: AppColors.onSecondary,
       error: AppColors.tertiary,
       onError: AppColors.onTertiary,
-      surface: AppColors.neutral,
+      surfaceContainer: AppColors.neutral,
+      surface: AppColors.neutralMedium,
       onSurface: AppColors.onNeutral,
     ),
     fontFamily: "Inter",
     useMaterial3: true,
-     textTheme: const TextTheme(
+    scaffoldBackgroundColor: AppColors.neutralMedium,
+    textTheme: const TextTheme(
       headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
       bodyMedium: TextStyle(fontSize: 16),
       labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),

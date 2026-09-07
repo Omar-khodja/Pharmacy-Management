@@ -16,11 +16,9 @@ class MedicienCardInfo extends StatelessWidget {
     super.key,
     required this.medicine,
     this.showButtons = false,
-    this.showquntitybutton = false,
   });
   final Medicine medicine;
   final bool showButtons;
-  final bool showquntitybutton;
 
   void _onDelete(BuildContext context) {
     showDialog(
@@ -50,6 +48,7 @@ class MedicienCardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainer,
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -134,33 +133,6 @@ class MedicienCardInfo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            const SizedBox(height: 8),
-            if (showquntitybutton)
-              Container(
-                width: 132,
-                height: 53,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade400),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.remove),
-                      onPressed: () {},
-                    ),
-                    Text(
-                      '0',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    IconButton(icon: const Icon(Icons.add), onPressed: () {}),
-                  ],
-                ),
-              ),
             if (showButtons)
               Row(
                 mainAxisAlignment: .end,

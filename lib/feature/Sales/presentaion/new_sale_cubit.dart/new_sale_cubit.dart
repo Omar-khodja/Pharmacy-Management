@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/Sales/domain/usecase/create_sale_usecase.dart';
@@ -7,9 +8,72 @@ class NewSaleCubit extends Cubit<NewSaleCubitState> {
   final CreateSaleUsecase createSaleUsecase;
   new({required this.createSaleUsecase}) : super(InitNewSaleState());
 
-  Future<void> addToBasket(Medicine medicien) async {
-    final currenstate = state.medicine;
-    emit(NewSaleData(medicines: currenstate));
+  Future<void> addToBasket(Medicine medicine) async {
+    if (medicine.quantity > 0) {
+      final currentState = List<Medicine>.from(state.medicine);
+      final exists = currentState.any((m) => m.id == medicine.id);
+
+      if (!exists) {
+        currentState.add(medicine.copyWith(orederedQuantity: 1));
+        emit(NewSaleData(medicines: currentState));
+      } else {
+        emit(
+          NewSaleData(
+            medicines: currentState,
+            errorMessage: "Item alredy exists in cart!",
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> incrementQuantity(int id) async {
+    debugPrint("increment");
+    final currentState = List<Medicine>.from(state.medicine);
+    final index = currentState.indexWhere((m) => m.id == id);
+
+    if (index != -1) {
+      if (currentState[index].orederedQuantity < currentState[index].quantity) {
+        final updated = currentState[index].copyWith(
+          orederedQuantity: currentState[index].orederedQuantity + 1,
+        );
+        currentState[index] = updated;
+        emit(NewSaleData(medicines: currentState));
+      }
+      if (currentState[index].orederedQuantity + 1 >
+          currentState[index].quantity) {
+        emit(
+          NewSaleData(
+            medicines: currentState,
+            errorMessage: "you only have  ${currentState[index].quantity} Unit",
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> decrementQuantity(int id) async {
+    final currentState = List<Medicine>.from(state.medicine);
+    final index = currentState.indexWhere((m) => m.id == id);
+
+    if (index != -1) {
+      if (currentState[index].orederedQuantity > 1) {
+        final currentQty = currentState[index].orederedQuantity;
+
+        final updated = currentState[index].copyWith(
+          orederedQuantity: currentQty - 1,
+        );
+        currentState[index] = updated;
+        emit(NewSaleData(medicines: currentState));
+      } else {
+        emit(
+          NewSaleData(
+            medicines: currentState,
+            errorMessage: "Quntity can't be less then 1",
+          ),
+        );
+      }
+    }
   }
 
   Future<void> removeFromBasket(Medicine medicine) async {

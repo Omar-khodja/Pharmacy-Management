@@ -14,6 +14,7 @@ class Medicine extends Equatable {
   final bool? isLowStock;
   final bool? isExpired;
   final bool? isExpiringSoon;
+  final int orederedQuantity;
 
   const Medicine({
     this.id,
@@ -28,6 +29,7 @@ class Medicine extends Equatable {
     this.isLowStock,
     this.isExpired,
     this.isExpiringSoon,
+    this.orederedQuantity =0,
   });
   factory Medicine.empty() {
     return Medicine(
@@ -45,7 +47,7 @@ class Medicine extends Equatable {
       isExpiringSoon: false,
     );
   }
-    /// ✅ CopyWith method
+
   Medicine copyWith({
     int? id,
     String? name,
@@ -59,6 +61,7 @@ class Medicine extends Equatable {
     bool? isLowStock,
     bool? isExpired,
     bool? isExpiringSoon,
+    int? orederedQuantity,
   }) {
     return Medicine(
       id: id ?? this.id,
@@ -73,6 +76,7 @@ class Medicine extends Equatable {
       isLowStock: isLowStock ?? this.isLowStock,
       isExpired: isExpired ?? this.isExpired,
       isExpiringSoon: isExpiringSoon ?? this.isExpiringSoon,
+      orederedQuantity: orederedQuantity ?? this.orederedQuantity,
     );
   }
 

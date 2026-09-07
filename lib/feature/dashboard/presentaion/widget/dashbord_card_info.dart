@@ -16,6 +16,7 @@ class DashboardInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: BorderSide(
@@ -25,7 +26,7 @@ class DashboardInfoCard extends StatelessWidget {
       elevation: isError ? 6 : 2,
       color: isError
           ? Theme.of(context).colorScheme.error.withValues(alpha: 0.8)
-          : Theme.of(context).colorScheme.surface,
+          : Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: Column(

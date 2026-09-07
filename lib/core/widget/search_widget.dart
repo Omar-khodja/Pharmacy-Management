@@ -14,7 +14,7 @@ class SearchWidget extends StatefulWidget {
   const SearchWidget({
     super.key,
     required this.showEditButton,
-     this.onItemSelected,
+    this.onItemSelected,
   });
   final bool showEditButton;
   final void Function(Medicine)? onItemSelected;
@@ -83,9 +83,24 @@ class _SearchWidgetState extends State<SearchWidget> {
                           value: context.read<MedicienMangmentBloc>(),
                           child: ListView.builder(
                             itemCount: state.medicines.length,
-                            itemBuilder: (context, index) => MedicienCardInfo(
-                              medicine: state.medicines[index],
-                              showButtons: widget.showEditButton,
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () {
+                                if (widget.onItemSelected != null) {
+                                  widget.onItemSelected!(
+                                    state.medicines[index],
+                                  );
+                                }
+                              },
+                              splashColor: Theme.of(context).colorScheme.primary
+                                  .withValues(alpha: .1),
+                              highlightColor: Colors.blue.withValues(
+                                alpha: 0.1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              child: MedicienCardInfo(
+                                medicine: state.medicines[index],
+                                showButtons: widget.showEditButton,
+                              ),
                             ),
                           ),
                         ),
@@ -96,7 +111,9 @@ class _SearchWidgetState extends State<SearchWidget> {
                         MedicienCardInfo(medicine: Medicine.empty()),
                   ),
                 ),
-                MedicieninitState() => const Center(child: Text("Search for Medicien"),),
+                MedicieninitState() => const Center(
+                  child: Text("Search for Medicien"),
+                ),
               };
             },
           ),
