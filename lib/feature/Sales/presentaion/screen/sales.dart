@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
-import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/bloc/sale_bloc.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_bloc.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/new_sale_cubit.dart/new_sale_cubit.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/new_sale_screen.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/widget/Invoice_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
+    as di;
 
 class Sales extends StatefulWidget {
   const Sales({super.key});
@@ -28,8 +31,17 @@ class _SalesState extends State<Sales> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => BlocProvider.value(
-                value: context.read<MedicienMangmentBloc>(),
+              builder: (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: context.read<MedicienMangmentBloc>(),
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        NewSaleCubit(createSaleUsecase: di.sl()),
+                  ),
+                ],
+
                 child: const NewSaleScreen(),
               ),
             ),

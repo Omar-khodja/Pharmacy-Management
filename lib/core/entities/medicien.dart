@@ -4,7 +4,7 @@ import 'package:pharmacy_management/core/entities/category.dart';
 class Medicine extends Equatable {
   final int? id;
   final String name;
-  final int categoryId;
+  final int? categoryId;
   final Category? category;
   final double price;
   final int quantity;

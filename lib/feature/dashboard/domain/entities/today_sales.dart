@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class SalesData extends Equatable {
+class TodaySales extends Equatable {
   final int count;
   final double total;
 
  
 
-  const SalesData({
+  const TodaySales({
     required this.count,
     required this.total,
   });

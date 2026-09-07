@@ -14,17 +14,11 @@ class MedicienLoadingState extends MedicienMangmentBlocState {
 
 class MedicienLoadedState extends MedicienMangmentBlocState {
   final List<Medicine> medicines;
-  const MedicienLoadedState(this.medicines);
-}
-class SuccessfulMessageState extends MedicienMangmentBlocState {
-  final String message;
-    final List<Medicine> medicines;
-
-  const SuccessfulMessageState({required this.message,required this.medicines});
+  final String? message;
+  final String? errorMessage;
+  const MedicienLoadedState({required this.medicines,this.message,this.errorMessage});
 }
 
 
-class MedicienErrorState extends MedicienMangmentBlocState {
-  final String errorMessage;
-  const MedicienErrorState(this.errorMessage);
-}
+
+

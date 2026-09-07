@@ -11,6 +11,7 @@ class SearchMedicinesEvent extends MedicienMangmentBlocEvent {
 
 class GetMedicineDetailsEvent extends MedicienMangmentBlocEvent {
   final String id;
+  
   const GetMedicineDetailsEvent(this.id);
 }
 

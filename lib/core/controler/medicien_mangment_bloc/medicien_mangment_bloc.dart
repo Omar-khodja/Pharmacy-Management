@@ -27,13 +27,11 @@ class MedicienMangmentBloc
       final result = await addUsecase.call(event.medicine);
       final currentMedicines = state is MedicienLoadedState
           ? (state as MedicienLoadedState).medicines
-          : state is SuccessfulMessageState
-          ? (state as SuccessfulMessageState).medicines
           : <Medicine>[];
       result.fold(
-        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
+        ifLeft: (failure) => emit(MedicienLoadedState(errorMessage:failure.message,medicines: currentMedicines)),
         ifRight: (message) => emit(
-          SuccessfulMessageState(message: message, medicines: currentMedicines),
+          MedicienLoadedState(medicines: currentMedicines, message: message),
         ),
       );
     });
@@ -42,12 +40,15 @@ class MedicienMangmentBloc
       final result = await editeUsecase.call(event.medicine);
       final currentMedicines = state is MedicienLoadedState
           ? (state as MedicienLoadedState).medicines
-          : state is SuccessfulMessageState
-          ? (state as SuccessfulMessageState).medicines
           : <Medicine>[];
 
       result.fold(
-        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
+        ifLeft: (failure) => emit(
+          MedicienLoadedState(
+            errorMessage: failure.message,
+            medicines: currentMedicines,
+          ),
+        ),
         ifRight: (message) {
           final updatedList = currentMedicines.map((item) {
             return item.id == event.medicine.id
@@ -60,33 +61,45 @@ class MedicienMangmentBloc
                   )
                 : item;
           }).toList();
-          emit(
-            SuccessfulMessageState(message: message, medicines: updatedList),
-          );
+          emit(MedicienLoadedState(medicines: updatedList, message: message));
         },
       );
     });
 
     on<DeleteMedicineEvent>((event, emit) async {
+      final result = await deleteUsecase.call(event.id);
+
       final currentMedicines = state is MedicienLoadedState
           ? (state as MedicienLoadedState).medicines
-          : state is SuccessfulMessageState
-          ? (state as SuccessfulMessageState).medicines
           : <Medicine>[];
-      final updatedMedicines = currentMedicines
-          .where((m) => m.id != event.id)
-          .toList();
+
       currentMedicines.removeWhere((element) => element.id == event.id);
-      emit(
-        SuccessfulMessageState(message: "message", medicines: updatedMedicines),
+      result.fold(
+        ifLeft: (error) => emit(
+          MedicienLoadedState(
+            medicines: currentMedicines,
+            errorMessage: error.message,
+          ),
+        ),
+        ifRight: (value) {
+          final updatedMedicines = currentMedicines
+              .where((m) => m.id != event.id)
+              .toList();
+
+          emit(
+            MedicienLoadedState(medicines: updatedMedicines, message: value),
+          );
+        },
       );
     });
     on<SearchMedicinesEvent>((event, emit) async {
       emit(const MedicienLoadingState());
       final result = await searchUsecase.call(event.query);
       result.fold(
-        ifLeft: (failure) => emit(MedicienErrorState(failure.message)),
-        ifRight: (medicien) => emit(MedicienLoadedState(medicien)),
+        ifLeft: (failure) => emit(
+          MedicienLoadedState(medicines: [], errorMessage: failure.message),
+        ),
+        ifRight: (medicien) => emit(MedicienLoadedState(medicines: medicien)),
       );
     });
     on<GetMedicineDetailsEvent>((event, emit) async {

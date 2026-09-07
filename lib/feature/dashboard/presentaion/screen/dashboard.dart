@@ -5,6 +5,7 @@ import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/das
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit_state.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashbord_card_info.dart';
 import 'package:pharmacy_management/core/widget/medicien_card_info.dart';
+import 'package:pharmacy_management/feature/dashboard/presentaion/widget/low_stok_medicien_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Dashboard extends StatefulWidget {
@@ -86,6 +87,11 @@ class _DashboardState extends State<Dashboard> {
                         icon: Icons.warehouse,
                         isError: true,
                       ),
+                      DashboardInfoCard(
+                        title: "Today Sales",
+                        value: "${dashboardData.salesData.total.toString()} DZ",
+                        icon: Icons.attach_money,
+                      ),
                       const SizedBox(height: 8),
                       const Text(
                         "Recent Alerts",
@@ -99,7 +105,7 @@ class _DashboardState extends State<Dashboard> {
                           itemBuilder: (context, index) {
                             final medicine =
                                 state.dashboardData.lowStockMedicines[index];
-                            return MedicienCardInfo(medicine: medicine);
+                            return LowStokMedicienCard(medicine: medicine);
                           },
                         ),
                       ),
@@ -117,7 +123,11 @@ class _DashboardState extends State<Dashboard> {
                           child: Center(
                             child: Text(
                               message,
-                              style: const TextStyle(color: Colors.red,fontSize: 28,fontWeight: .bold),
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 28,
+                                fontWeight: .bold,
+                              ),
                             ),
                           ),
                         ),

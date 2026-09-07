@@ -19,13 +19,13 @@ class MedicienModel extends Medicine {
 
   factory MedicienModel.fromJson(Map<String, dynamic> json) {
     return MedicienModel(
-      id: json['id'],
+      id: json['id'] ,
       name: json['name'],
       categoryId: json['category_id'],
       category: CategoryModel.fromJson(json['category']),
       price: (json['price'] as num).toDouble(),
       quantity: (json['quantity'] ?? 0) as int,
-      minStockLevel: json['min_stock_level'],
+      minStockLevel: json['min_stock_level'] ?? 10,
       expiryDate: DateTime.parse(json['expiry_date']),
       expiryStatus: json['expiry_status'],
       isLowStock: json['is_low_stock'],
