@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/widget/error_messag.dart';
+import 'package:pharmacy_management/feature/dashboard/domain/entities/low_stock_medicien.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit_state.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashbord_card_info.dart';
-import 'package:pharmacy_management/core/widget/medicien_card_info.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/widget/low_stok_medicien_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -49,6 +49,11 @@ class _DashboardState extends State<Dashboard> {
                         icon: Icons.warehouse,
                         isError: true,
                       ),
+                      const DashboardInfoCard(
+                        title: "Total Medicines",
+                        value: "2027/28/80",
+                        icon: Icons.medication,
+                      ),
                       const SizedBox(height: 8),
                       const Text(
                         "Recent Alerts",
@@ -59,9 +64,9 @@ class _DashboardState extends State<Dashboard> {
                         child: ListView.builder(
                           itemCount: 3,
                           itemBuilder: (context, index) {
-                            final medicine = Medicine.empty();
+                            final medicine = LowStockMedicien.empty();
 
-                            return MedicienCardInfo(medicine: medicine);
+                            return LowStokMedicienCard(medicine: medicine);
                           },
                         ),
                       ),
@@ -111,29 +116,11 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ],
                   ),
-                DashboardFailureState(message: final message) =>
-                  RefreshIndicator(
-                    onRefresh: () =>
-                        context.read<DashboardCubit>().getDashboardData(),
-                    child: ListView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.7,
-                          child: Center(
-                            child: Text(
-                              message,
-                              style: const TextStyle(
-                                color: Colors.red,
-                                fontSize: 28,
-                                fontWeight: .bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                DashboardFailureState(message: final message) => ErrorMessag(
+                  message: message,
+                  onRetry: () =>
+                      context.read<DashboardCubit>().getDashboardData(),
+                )
               };
             },
           ),

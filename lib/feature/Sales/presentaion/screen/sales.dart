@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
+import 'package:pharmacy_management/core/widget/error_messag.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_bloc.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/new_sale_cubit.dart/new_sale_cubit.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/new_sale_screen.dart';
@@ -58,17 +58,7 @@ class _SalesState extends State<Sales> {
           debugPrint("hello");
           context.read<SaleBloc>().add(GetSalesList());
         },
-        child: BlocConsumer<SaleBloc, SaleState>(
-          listener: (context, state) {
-            if (state is SaleListData) {
-              if (state.errorMessage != null) {
-                Fluttertoast.showToast(
-                  msg: state.errorMessage!,
-                  backgroundColor: Colors.red,
-                );
-              }
-            }
-          },
+        child: BlocBuilder<SaleBloc, SaleState>(
           builder: (context, state) {
             return switch (state) {
               SaleListData() =>
@@ -91,6 +81,10 @@ class _SalesState extends State<Sales> {
                     ListTile(title: Text("data"), subtitle: Text("data")),
                   ],
                 ),
+              ),
+              SaleError() => ErrorMessag(
+                message: state.errorMessage,
+                onRetry: () => context.read<SaleBloc>().add(GetSalesList()),
               ),
             };
           },

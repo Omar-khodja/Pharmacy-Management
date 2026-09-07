@@ -38,7 +38,7 @@ class InvoiceItemCard extends StatelessWidget {
               children: [
                 const Icon(Icons.attach_money, color: Colors.green),
                 const SizedBox(width: 6),
-                Text("Unit Price: \$${item.unitPrice.toStringAsFixed(2)}"),
+                Text("Unit Price: ${item.unitPrice.toStringAsFixed(2)} DZ"),
               ],
             ),
 

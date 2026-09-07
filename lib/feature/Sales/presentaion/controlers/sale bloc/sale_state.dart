@@ -11,7 +11,11 @@ final class SaleLoding extends SaleState {}
 
 final class SaleListData extends SaleState {
   final List<SaleEntity> sales;
-  final String? errorMessage;
-  const new({required this.sales, this.errorMessage});
+  const new({required this.sales});
+}
+
+final class SaleError extends SaleState {
+  final String errorMessage;
+  const new(this.errorMessage);
 }
 

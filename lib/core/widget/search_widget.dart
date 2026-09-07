@@ -78,7 +78,9 @@ class _SearchWidgetState extends State<SearchWidget> {
               return switch (state) {
                 MedicienLoadedState() =>
                   state.medicines.isEmpty
-                      ? const Center(child: Text("No Result Found"))
+                      ? const Center(
+                          child: Text("Empty Search,Try search for Medidine"),
+                        )
                       : BlocProvider.value(
                           value: context.read<MedicienMangmentBloc>(),
                           child: ListView.builder(

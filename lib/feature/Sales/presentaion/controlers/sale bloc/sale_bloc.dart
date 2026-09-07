@@ -15,12 +15,10 @@ class SaleBloc extends Bloc<SaleEvent, SaleState> {
     : super(SaleLoding()) {
     debugPrint("SaleBloc created");
     on<GetSalesList>((event, emit) async {
-
       emit(SaleLoding());
       final response = await getSalesUsecase.call();
       response.fold(
-        ifLeft: (message) =>
-            emit(SaleListData(sales: const [], errorMessage: message.message)),
+        ifLeft: (message) => emit(SaleError(message.message)),
         ifRight: (sales) {
           emit(SaleListData(sales: sales));
         },
