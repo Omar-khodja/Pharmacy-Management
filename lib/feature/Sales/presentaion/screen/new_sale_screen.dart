@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/widget/primary_elevatedbutton.dart';
 
 import 'package:pharmacy_management/core/widget/search_widget.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/new_sale_cubit.dart/new_sale_cubit.dart';
@@ -29,7 +30,6 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
   }
 
   void _increment(int id) {
-    debugPrint("here");
     context.read<NewSaleCubit>().incrementQuantity(id);
   }
 
@@ -74,9 +74,13 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      SizedBox(
-                        height: 200,
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          minHeight: 50,
+                          maxHeight: 200,
+                        ),
                         child: ListView.builder(
+                          shrinkWrap: true,
                           itemCount: state.medicine.length,
                           itemBuilder: (context, index) {
                             final medicine = state.medicine[index];
@@ -113,6 +117,13 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
                       Text("Total items: ${state.medicine.length}"),
                       Text(
                         "Total price: ${state.medicine.fold<double>(0, (sum, m) => sum + (m.price * m.orederedQuantity))} DA",
+                      ),
+                      const SizedBox(height: 5),
+                      PrimaryElevatedbutton(
+                        title: "Save",
+                        onClick: () {
+                          context.read<NewSaleCubit>().saveInvoice();
+                        },
                       ),
                     ],
                   ),

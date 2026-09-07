@@ -29,6 +29,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               Column(
                 crossAxisAlignment: .start,
                 mainAxisAlignment: .center,
+              mainAxisSize: .min,
                 children: [
                   Text(widget.medicine.name),
                   Text(

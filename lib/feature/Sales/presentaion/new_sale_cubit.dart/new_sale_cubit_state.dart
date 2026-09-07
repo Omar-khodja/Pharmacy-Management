@@ -12,6 +12,7 @@ final class InitNewSaleState extends NewSaleCubitState {
 
 final class NewSaleData extends NewSaleCubitState {
   final String? errorMessage;
+  
   new({required List<Medicine> medicines, this.errorMessage})
     : super(medicines);
 }

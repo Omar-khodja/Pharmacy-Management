@@ -53,42 +53,48 @@ class _SalesState extends State<Sales> {
         ),
         heroTag: "newSales",
       ),
-      body: BlocConsumer<SaleBloc, SaleState>(
-        listener: (context, state) {
-          if (state is SaleListData) {
-            if (state.errorMessage != null) {
-              Fluttertoast.showToast(
-                msg: state.errorMessage!,
-                backgroundColor: Colors.red,
-              );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          debugPrint("hello");
+          context.read<SaleBloc>().add(GetSalesList());
+        },
+        child: BlocConsumer<SaleBloc, SaleState>(
+          listener: (context, state) {
+            if (state is SaleListData) {
+              if (state.errorMessage != null) {
+                Fluttertoast.showToast(
+                  msg: state.errorMessage!,
+                  backgroundColor: Colors.red,
+                );
+              }
             }
-          }
-        },
-        builder: (context, state) {
-          return switch (state) {
-            SaleListData() =>
-              state.sales.isEmpty
-                  ? const Center(child: Text("No Invoice Yet!"))
-                  : ListView.builder(
-                      itemCount: state.sales.length,
-                      itemBuilder: (context, index) {
-                        return InvoiceCard(
-                          sale: state.sales[index],
-                          showButton: true,
-                        );
-                      },
-                    ),
-            SaleLoding() => const Skeletonizer(
-              child: Column(
-                children: [
-                  ListTile(title: Text("data"), subtitle: Text("data")),
-                  ListTile(title: Text("data"), subtitle: Text("data")),
-                  ListTile(title: Text("data"), subtitle: Text("data")),
-                ],
+          },
+          builder: (context, state) {
+            return switch (state) {
+              SaleListData() =>
+                state.sales.isEmpty
+                    ? const Center(child: Text("No Invoice Yet!"))
+                    : ListView.builder(
+                        itemCount: state.sales.length,
+                        itemBuilder: (context, index) {
+                          return InvoiceCard(
+                            sale: state.sales[index],
+                            showButton: true,
+                          );
+                        },
+                      ),
+              SaleLoding() => const Skeletonizer(
+                child: Column(
+                  children: [
+                    ListTile(title: Text("data"), subtitle: Text("data")),
+                    ListTile(title: Text("data"), subtitle: Text("data")),
+                    ListTile(title: Text("data"), subtitle: Text("data")),
+                  ],
+                ),
               ),
-            ),
-          };
-        },
+            };
+          },
+        ),
       ),
     );
   }
