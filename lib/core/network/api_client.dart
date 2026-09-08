@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
@@ -125,6 +127,10 @@ class ApiClient {
       final statusCode = e.response?.statusCode;
       final message = _apiErrorhandler(statusCode.toString());
       return RemoteException(message: message, statusCode: statusCode);
+    } else if (e.error is SocketException) {
+      return AppDioException(
+        "No Internet connection. Please check your network.",
+      );
     } else {
       return AppDioException(e.message ?? "Unexpected Dio error");
     }

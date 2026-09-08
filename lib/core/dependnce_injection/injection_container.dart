@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
+import 'package:pharmacy_management/core/dependnce_injection/init_Inventory_feature.dart';
 import 'package:pharmacy_management/core/dependnce_injection/init_auth_feature.dart';
 import 'package:pharmacy_management/core/dependnce_injection/init_dashboard_feature.dart';
 import 'package:pharmacy_management/core/dependnce_injection/init_medicien_mangment_feature.dart';
@@ -30,4 +31,5 @@ Future<void> init() async {
   initDashboardFeature(sl);
   initMedicienMangmentFeature(sl);
   initSalesFeature(sl);
+  initInventoryFeature(sl);
 }
