@@ -5,6 +5,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.dart';
+import 'package:pharmacy_management/core/network/api_client.dart';
+import 'package:pharmacy_management/core/storage/tokenstorage.dart';
+import 'package:pharmacy_management/feature/Inventory/data/data_source.dart/inventory_datasource.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
@@ -37,6 +40,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   initState() {
     super.initState();
+
 
     _pages = [
       BlocProvider(
