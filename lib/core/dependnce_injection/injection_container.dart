@@ -25,6 +25,7 @@ Future<void> init() async {
       loginUsecase: sl(),
       longOutUsecase: sl(),
       forcedlogOutUSerCase: sl(),
+      getCurrenuserUsecase: sl(),
     ),
   );
   initAuthFeature(sl);

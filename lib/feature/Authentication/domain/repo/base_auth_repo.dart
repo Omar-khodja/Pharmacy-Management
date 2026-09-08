@@ -6,4 +6,6 @@ abstract class BaseAuthRepo {
   Future<Either<AppFailure, Authstate>> login(String email, String password);
   Future<Either<AppFailure, String>> logOut();
   Future<Either<AppFailure, String>> forceLogOut();
+    Future<Either<AppFailure, Authstate>> getCurrentUser();
+
 }

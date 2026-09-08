@@ -18,7 +18,7 @@ class AuthRepoImpl implements BaseAuthRepo {
   ) async {
     try {
       final data = await datasource.login(email, password);
-      await tokenStorage.saveToken(data.token!);
+      await tokenStorage.saveToken(data.token);
       return Right(data);
     } on RemoteException catch (e) {
       debugPrint(
@@ -46,14 +46,8 @@ class AuthRepoImpl implements BaseAuthRepo {
       await tokenStorage.deleteToken();
       return const Right("Logged Out Successfully");
     } on RemoteException catch (e) {
-      debugPrint(
-        "//////////////////////////////////AuthRepoImpl logout server error : ${e.toString()}",
-      );
       return Left(RemoteFailure(message: e.message, statusCode: e.statusCode));
     } on AppDioException catch (e) {
-      debugPrint(
-        "//////////////////////////////////AuthRepoImpl logout Dio error : ${e.message}",
-      );
       return Left(DioFailure(message: e.message));
     } catch (e) {
       return Left(UnexpectedFailure(message: e.toString()));
@@ -71,6 +65,22 @@ class AuthRepoImpl implements BaseAuthRepo {
       return const Right("Token Expired Login Again");
     } catch (e) {
       return Left(LocalStorageFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, Authstate>> getCurrentUser() async {
+    try {
+      final token = await tokenStorage.getToken();
+
+      final response = await datasource.getCurrentUser(token!);
+      return Right(response);
+    } on RemoteException catch (e) {
+      return Left(RemoteFailure(message: e.message, statusCode: e.statusCode));
+    } on AppDioException catch (e) {
+      return Left(DioFailure(message: e.message));
+    } catch (e) {
+      return Left(UnexpectedFailure(message: e.toString()));
     }
   }
 }

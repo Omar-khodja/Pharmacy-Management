@@ -5,6 +5,7 @@ import 'package:pharmacy_management/core/usecase/forced_logout_usecae.dart';
 import 'package:pharmacy_management/core/usecase/longout_usecase.dart';
 import 'package:pharmacy_management/feature/Authentication/data/data_source.dart/auth_remote_datasource.dart';
 import 'package:pharmacy_management/feature/Authentication/data/repo/auth_repo_impl.dart';
+import 'package:pharmacy_management/feature/Authentication/domain/usecase/get_currenuser_usecase.dart';
 import 'package:pharmacy_management/feature/Authentication/domain/usecase/login_usecase.dart';
 
 final sl = GetIt.instance;
@@ -15,11 +16,10 @@ void initAuthFeature(GetIt sl) {
     () => AuthRepoImpl(
       datasource: sl<AuthRemoteDatasource>(),
       tokenStorage: sl<TokenStorage>(),
-    
     ),
   );
   sl.registerLazySingleton(() => LoginUsecase(sl<AuthRepoImpl>()));
   sl.registerLazySingleton(() => LongOutUsecase(sl<AuthRepoImpl>()));
-    sl.registerLazySingleton(() => ForcedlogOutUSerCase(sl<AuthRepoImpl>()));
-
+  sl.registerLazySingleton(() => ForcedlogOutUSerCase(sl<AuthRepoImpl>()));
+  sl.registerLazySingleton(() => GetCurrenuserUsecase(sl<AuthRepoImpl>()));
 }

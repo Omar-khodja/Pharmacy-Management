@@ -38,6 +38,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   initState() {
     super.initState();
+    context.read<AuthCubit>().getCurrentUser();
 
     _pages = [
       BlocProvider(
@@ -88,53 +89,63 @@ class _NavigationScreenState extends State<NavigationScreen> {
         child: ListTileTheme(
           textColor: Colors.white,
           iconColor: Colors.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const DrawerHeader(
-                child: Column(
-                  mainAxisAlignment: .center,
-                  mainAxisSize: .min,
+          child: BlocBuilder<AuthCubit, AuthCubitState>(
+            builder: (context, state) {
+              if (state is Authorized) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        size: 40,
-                        color: Colors.blueGrey,
+                    DrawerHeader(
+                      child: Column(
+                        mainAxisAlignment: .center,
+                        mainAxisSize: .min,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .primaryContainer,
+                            child: Text(
+                              state.authstate.user.name.substring(0, 2),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            state.authstate.user.name,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: .bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Text(
-                      "Khodja Omar",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: .bold,
-                        color: Colors.white,
-                      ),
+                    ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text('Home'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.settings),
+                      title: const Text('Settings'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.logout),
+                      title: const Text('Logout'),
+                      onTap: () {
+                        context.read<AuthCubit>().logout();
+                      },
                     ),
                   ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text('Home'),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Settings'),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Logout'),
-                onTap: () {
-                  context.read<AuthCubit>().logout();
-                },
-              ),
-            ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
       ),
