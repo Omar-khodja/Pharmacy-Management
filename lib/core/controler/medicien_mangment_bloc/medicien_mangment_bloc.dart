@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/network/network_manager.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/add_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/delete_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/details_usecase.dart';
@@ -23,13 +24,22 @@ class MedicienMangmentBloc
     required this.editeUsecase,
     required this.searchUsecase,
   }) : super(const MedicieninitState()) {
+    NetworkManager.networkRestoredController.stream.listen((_) {
+      add(const SearchMedicinesEvent(""));
+    });
+
     on<AddMedicineEvent>((event, emit) async {
       final result = await addUsecase.call(event.medicine);
       final currentMedicines = state is MedicienLoadedState
           ? (state as MedicienLoadedState).medicines
           : <Medicine>[];
       result.fold(
-        ifLeft: (failure) => emit(MedicienLoadedState(errorMessage:failure.message,medicines: currentMedicines)),
+        ifLeft: (failure) => emit(
+          MedicienLoadedState(
+            errorMessage: failure.message,
+            medicines: currentMedicines,
+          ),
+        ),
         ifRight: (message) => emit(
           MedicienLoadedState(medicines: currentMedicines, message: message),
         ),

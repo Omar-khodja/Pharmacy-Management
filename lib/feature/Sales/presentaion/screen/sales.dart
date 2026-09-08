@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/core/widget/error_messag.dart';
-import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_bloc.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_cubit.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/new_sale_cubit.dart/new_sale_cubit.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/new_sale_screen.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/widget/Invoice_card.dart';
@@ -21,7 +21,7 @@ class _SalesState extends State<Sales> {
   @override
   void initState() {
     super.initState();
-    context.read<SaleBloc>().add(GetSalesList());
+    context.read<SaleCubit>().getSalesList();
   }
 
   @override
@@ -56,9 +56,9 @@ class _SalesState extends State<Sales> {
       body: RefreshIndicator(
         onRefresh: () async {
           debugPrint("hello");
-          context.read<SaleBloc>().add(GetSalesList());
+          context.read<SaleCubit>().getSalesList();
         },
-        child: BlocBuilder<SaleBloc, SaleState>(
+        child: BlocBuilder<SaleCubit, SaleState>(
           builder: (context, state) {
             return switch (state) {
               SaleListData() =>
@@ -84,7 +84,7 @@ class _SalesState extends State<Sales> {
               ),
               SaleError() => ErrorMessag(
                 message: state.errorMessage,
-                onRetry: () => context.read<SaleBloc>().add(GetSalesList()),
+                onRetry: () => context.read<SaleCubit>().getSalesList(),
               ),
             };
           },

@@ -1,4 +1,4 @@
-part of 'sale_bloc.dart';
+part of 'sale_cubit.dart';
 
 sealed class SaleState extends Equatable {
   const SaleState();

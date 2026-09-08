@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pharmacy_management/core/network/network_manager.dart';
 import 'package:pharmacy_management/feature/Inventory/domain/entities/inventory_alaret.dart';
 import 'package:pharmacy_management/feature/Inventory/domain/usecase/get_alaret_usecase.dart';
 import 'package:pharmacy_management/feature/Inventory/domain/usecase/updatequantity_usecase.dart';
@@ -12,7 +13,11 @@ class InventoryCubit extends Cubit<InventoryState> {
   InventoryCubit({
     required this._getAlaretUsecase,
     required this._updatequantityUsecase,
-  }) : super(const InventoryLoding());
+  }) : super(const InventoryLoding()){
+     NetworkManager.networkRestoredController.stream.listen((_) {
+      getAlaret(); // retry when internet is back
+    });
+  }
   final GetAlaretUsecase _getAlaretUsecase;
   final UpdatequantityUsecase _updatequantityUsecase;
 

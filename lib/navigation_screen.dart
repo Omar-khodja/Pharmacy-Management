@@ -9,7 +9,7 @@ import 'package:pharmacy_management/feature/Inventory/presentaion/controlers/inv
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
-import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_bloc.dart';
+import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_cubit.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
 import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
@@ -54,7 +54,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => SaleBloc(
+            create: (context) => SaleCubit(
               getSaleDetailsUsecase: di.sl(),
               getSalesUsecase: di.sl(),
             ),

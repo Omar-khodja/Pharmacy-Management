@@ -1,10 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_management/core/network/network_manager.dart';
 import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit_state.dart';
 
 class DashboardCubit extends Cubit<DashboardCubitState> {
   DashboardCubit({required this.getDashBoardDataUseCase})
-    : super(const DashboardLoadingState());
+    : super(const DashboardLoadingState()) {
+    NetworkManager.networkRestoredController.stream.listen((_) {
+      getDashboardData(); // retry when internet is back
+    });
+  }
   final GetDashBoardDataUseCase getDashBoardDataUseCase;
 
   Future<void> getDashboardData() async {
