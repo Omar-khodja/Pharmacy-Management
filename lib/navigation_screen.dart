@@ -150,15 +150,18 @@ class _NavigationScreenState extends State<NavigationScreen> {
         ),
       ),
       child: Scaffold(
+        
         appBar: AppBar(
           elevation: 20,
+          shadowColor: Colors.black.withValues(alpha: 0.2),
+          foregroundColor: Colors.white,
           title: Text(_pageTitles[_selectedIndex]),
-          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           leading: IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () {
               _advancedDrawerController
-                  .showDrawer(); // open drawer programmatically
+                  .showDrawer(); 
             },
           ),
         ),

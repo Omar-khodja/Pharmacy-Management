@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/controlers/inventory_cubit/cubit/inventory_cubit.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/Inventory_details.dart';
-import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashbord_card_info.dart';
+import 'package:pharmacy_management/core/widget/dashbord_card_info.dart';
 import 'package:pharmacy_management/core/widget/error_messag.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

@@ -4,7 +4,7 @@ import 'package:pharmacy_management/core/widget/error_messag.dart';
 import 'package:pharmacy_management/feature/dashboard/domain/entities/low_stock_medicien.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit_state.dart';
-import 'package:pharmacy_management/feature/dashboard/presentaion/widget/dashbord_card_info.dart';
+import 'package:pharmacy_management/core/widget/dashbord_card_info.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/widget/low_stok_medicien_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

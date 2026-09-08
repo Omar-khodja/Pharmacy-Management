@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/core/network/network_manager.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/add_usecase.dart';
@@ -30,36 +31,35 @@ class MedicienMangmentBloc
 
     on<AddMedicineEvent>((event, emit) async {
       final result = await addUsecase.call(event.medicine);
-      final currentMedicines = state is MedicienLoadedState
-          ? (state as MedicienLoadedState).medicines
-          : <Medicine>[];
+
       result.fold(
-        ifLeft: (failure) => emit(
-          MedicienLoadedState(
-            errorMessage: failure.message,
-            medicines: currentMedicines,
-          ),
+        ifLeft: (failure) => Fluttertoast.showToast(
+          msg: failure.message,
+          backgroundColor: Colors.red,
         ),
-        ifRight: (message) => emit(
-          MedicienLoadedState(medicines: currentMedicines, message: message),
-        ),
+        ifRight: (message) {
+          final currentMedicines = state is MedicienLoadedState
+              ? (state as MedicienLoadedState).medicines
+              : <Medicine>[];
+          emit(
+            MedicienLoadedState(medicines: currentMedicines, message: message),
+          );
+        },
       );
     });
 
     on<EditMedicineEvent>((event, emit) async {
       final result = await editeUsecase.call(event.medicine);
-      final currentMedicines = state is MedicienLoadedState
-          ? (state as MedicienLoadedState).medicines
-          : <Medicine>[];
 
       result.fold(
-        ifLeft: (failure) => emit(
-          MedicienLoadedState(
-            errorMessage: failure.message,
-            medicines: currentMedicines,
-          ),
+        ifLeft: (failure) => Fluttertoast.showToast(
+          msg: failure.message,
+          backgroundColor: Colors.red,
         ),
         ifRight: (message) {
+          final currentMedicines = state is MedicienLoadedState
+              ? (state as MedicienLoadedState).medicines
+              : <Medicine>[];
           final updatedList = currentMedicines.map((item) {
             return item.id == event.medicine.id
                 ? item.copyWith(
@@ -79,19 +79,16 @@ class MedicienMangmentBloc
     on<DeleteMedicineEvent>((event, emit) async {
       final result = await deleteUsecase.call(event.id);
 
-      final currentMedicines = state is MedicienLoadedState
-          ? (state as MedicienLoadedState).medicines
-          : <Medicine>[];
-
-      currentMedicines.removeWhere((element) => element.id == event.id);
       result.fold(
-        ifLeft: (error) => emit(
-          MedicienLoadedState(
-            medicines: currentMedicines,
-            errorMessage: error.message,
-          ),
+        ifLeft: (error) => Fluttertoast.showToast(
+          msg: error.message,
+          backgroundColor: Colors.red,
         ),
         ifRight: (value) {
+          final currentMedicines = state is MedicienLoadedState
+              ? (state as MedicienLoadedState).medicines
+              : <Medicine>[];
+          currentMedicines.removeWhere((element) => element.id == event.id);
           final updatedMedicines = currentMedicines
               .where((m) => m.id != event.id)
               .toList();
@@ -106,8 +103,9 @@ class MedicienMangmentBloc
       emit(const MedicienLoadingState());
       final result = await searchUsecase.call(event.query);
       result.fold(
-        ifLeft: (failure) => emit(
-          MedicienLoadedState(medicines: [], errorMessage: failure.message),
+        ifLeft: (failure) => Fluttertoast.showToast(
+          msg: failure.message,
+          backgroundColor: Colors.red,
         ),
         ifRight: (medicien) => emit(MedicienLoadedState(medicines: medicien)),
       );
