@@ -5,17 +5,12 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit.dart';
 import 'package:pharmacy_management/core/controler/auth_cubit/auth_cubit_state.dart';
-import 'package:pharmacy_management/feature/Inventory/presentaion/controlers/inventory_cubit/cubit/inventory_cubit.dart';
 import 'package:pharmacy_management/feature/Inventory/presentaion/screen/inventory.dart';
-import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/screen/medicine_managment.dart';
-import 'package:pharmacy_management/feature/Sales/presentaion/controlers/sale%20bloc/sale_cubit.dart';
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
-import 'package:pharmacy_management/feature/dashboard/domain/usecase/get_dashboarddata_usecase.dart';
-import 'package:pharmacy_management/feature/dashboard/presentaion/controlers/dashboard_bubit/dashboard_cubit.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/screen/dashboard.dart';
-import 'package:pharmacy_management/core/dependnce_injection/injection_container.dart'
-    as di;
+
+
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -41,36 +36,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
     context.read<AuthCubit>().getCurrentUser();
 
     _pages = [
-      BlocProvider(
-        create: (context) => DashboardCubit(
-          getDashBoardDataUseCase: di.sl<GetDashBoardDataUseCase>(),
-        ),
+      const Dashboard(),
 
-        child: const Dashboard(),
-      ),
-      BlocProvider.value(
-        value: context.read<MedicienMangmentBloc>(),
-        child: const MedicineManagement(),
-      ),
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => SaleCubit(
-              getSaleDetailsUsecase: di.sl(),
-              getSalesUsecase: di.sl(),
-            ),
-          ),
-        ],
-        child: const Sales(),
-      ),
+      const MedicineManagement(),
 
-      BlocProvider(
-        create: (context) => InventoryCubit(
-          getAlaretUsecase: di.sl(),
-          updatequantityUsecase: di.sl(),
-        ),
-        child: const Inventory(),
-      ),
+      const Sales(),
+
+      const Inventory(),
     ];
   }
 
@@ -150,7 +122,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
         ),
       ),
       child: Scaffold(
-        
         appBar: AppBar(
           elevation: 20,
           shadowColor: Colors.black.withValues(alpha: 0.2),
@@ -160,8 +131,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
           leading: IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () {
-              _advancedDrawerController
-                  .showDrawer(); 
+              _advancedDrawerController.showDrawer();
             },
           ),
         ),
@@ -170,15 +140,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
             if (mounted && state is UnAuthorized) {
               Fluttertoast.showToast(
                 msg: state.message,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
               );
               Navigator.pushReplacementNamed(context, "/login");
             }
           },
-          child: IndexedStack(index: _selectedIndex, children: _pages),
+          child: _pages[_selectedIndex],
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(

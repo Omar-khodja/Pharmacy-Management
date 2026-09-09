@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/entities/medicien.dart';
 import 'package:pharmacy_management/feature/Sales/domain/entities/invoice.dart';
 import 'package:pharmacy_management/feature/Sales/domain/usecase/create_sale_usecase.dart';
@@ -13,12 +14,16 @@ class NewSaleCubit extends Cubit<NewSaleCubitState> {
     final List<Invoice> invoiceList = currentState
         .map((m) => Invoice(medicienId: m.id!, quantity: m.orederedQuantity))
         .toList();
+ 
     final response = await createSaleUsecase.call(invoiceList);
     response.fold(
       ifLeft: (value) => emit(
         NewSaleData(medicines: currentState, errorMessage: value.message),
       ),
-      ifRight: (value) => emit(InitNewSaleState()),
+      ifRight: (value) {
+        Fluttertoast.showToast(msg: value);
+        emit(InitNewSaleState());
+      },
     );
   }
 
@@ -53,15 +58,6 @@ class NewSaleCubit extends Cubit<NewSaleCubitState> {
         );
         currentState[index] = updated;
         emit(NewSaleData(medicines: currentState));
-      }
-      if (currentState[index].orederedQuantity + 1 >
-          currentState[index].quantity) {
-        emit(
-          NewSaleData(
-            medicines: currentState,
-            errorMessage: "you only have  ${currentState[index].quantity} Unit",
-          ),
-        );
       }
     }
   }

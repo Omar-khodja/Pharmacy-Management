@@ -15,7 +15,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     required this._loginUsecase,
     required this._longOutUsecase,
     required this._forcedlogOutUSerCase,
-    required this._getCurrenuserUsecase
+    required this._getCurrenuserUsecase,
   }) : super(const AuthInitial());
 
   Future<void> login(String email, String password) async {
@@ -29,12 +29,19 @@ class AuthCubit extends Cubit<AuthCubitState> {
   }
 
   Future<void> getCurrentUser() async {
-    emit(const AuthLoading());
     final result = await _getCurrenuserUsecase.call();
     result.fold(
       ifLeft: (failure) =>
           emit(UnAuthorized(message: failure.message, isValidationError: true)),
-      ifRight: (authstate) => emit(Authorized(authstate)),
+      ifRight: (authstate) {
+        if (state is Authorized) {
+          if ((state as Authorized).authstate.user == authstate.user) {
+            return;
+          }
+        }
+
+        emit(Authorized(authstate));
+      },
     );
   }
 

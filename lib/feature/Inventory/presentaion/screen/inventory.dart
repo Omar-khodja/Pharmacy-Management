@@ -22,7 +22,6 @@ class _InventoryState extends State<Inventory> {
 
   void _onSave(int id, int quantity) {
     context.read<InventoryCubit>().updateQuntity(id, quantity);
-    setState(() {});
   }
 
   @override

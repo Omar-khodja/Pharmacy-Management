@@ -20,10 +20,17 @@ class InventoryDetails extends StatefulWidget {
 
 class _InventoryDetailsState extends State<InventoryDetails> {
   final TextEditingController _quantity = TextEditingController();
+  late List<Medicine> medecineList;
   @override
   void dispose() {
     _quantity.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    medecineList = widget.medecine;
   }
 
   void _onSave(int id, int index) {
@@ -34,9 +41,9 @@ class _InventoryDetailsState extends State<InventoryDetails> {
     }
     _quantity.clear();
     setState(() {
-      widget.medecine[index] = widget.medecine[index].copyWith(
-        quantity: quantity,
-      );
+      medecineList = medecineList
+          .map((e) => e.id == id ? e.copyWith(quantity: quantity) : e)
+          .toList();
     });
     widget.postSave(id, quantity);
   }
@@ -45,10 +52,10 @@ class _InventoryDetailsState extends State<InventoryDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: widget.medecine.isEmpty
+      body: medecineList.isEmpty
           ? const Center(child: Text("Empty List"))
           : ListView.builder(
-              itemCount: widget.medecine.length,
+              itemCount: medecineList.length,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
                   showDialog(
@@ -78,7 +85,7 @@ class _InventoryDetailsState extends State<InventoryDetails> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              _onSave(widget.medecine[index].id!, index);
+                              _onSave(medecineList[index].id!, index);
                               Navigator.of(context)
                                   .pop(); // close dialog after update
                             },
@@ -89,7 +96,7 @@ class _InventoryDetailsState extends State<InventoryDetails> {
                     },
                   );
                 },
-                child: MedicienCardInfo(medicine: widget.medecine[index]),
+                child: MedicienCardInfo(medicine: medecineList[index]),
               ),
             ),
     );

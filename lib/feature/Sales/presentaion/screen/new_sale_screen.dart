@@ -37,6 +37,14 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
     context.read<NewSaleCubit>().decrementQuantity(id);
   }
 
+  void _onSave(List<Medicine> list) async {
+    if (list.isEmpty) return;
+    await context.read<NewSaleCubit>().saveInvoice();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,9 +129,7 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
                       const SizedBox(height: 5),
                       PrimaryElevatedbutton(
                         title: "Save",
-                        onClick: () {
-                          context.read<NewSaleCubit>().saveInvoice();
-                        },
+                        onClick: () => _onSave(state.medicine),
                       ),
                     ],
                   ),
