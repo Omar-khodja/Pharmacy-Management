@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
           child: Center(
             child: SingleChildScrollView(
               child: Card(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(context).colorScheme.surfaceContainer,
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: .circular(12),
@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 24,
-                    horizontal: 8,
+                    horizontal: 12,
                   ),
                   child: Form(
                     key: _formKey,
@@ -103,9 +103,7 @@ class _LoginState extends State<Login> {
                               "Pharmacy Management",
                               style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary,
+                                    
                                     fontSize: 24,
                                     fontWeight: .bold,
                                   ),
@@ -141,7 +139,7 @@ class _LoginState extends State<Login> {
                             keyboardType: TextInputType.visiblePassword,
                             decoration: InputDecoration(
                               labelText: "Password",
-                              prefixIcon: const Icon(Icons.email_outlined),
+                              prefixIcon: const Icon(Icons.lock_outline),
                               border: const OutlineInputBorder(),
                               errorText:
                                   (state is UnAuthorized) &&
