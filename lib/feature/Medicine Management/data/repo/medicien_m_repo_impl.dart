@@ -1,9 +1,9 @@
 import 'package:dart_either/src/dart_either.dart';
 import 'package:pharmacy_management/core/entities/category.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/core/error/exceptions.dart';
 import 'package:pharmacy_management/core/error/failure.dart';
-import 'package:pharmacy_management/core/model/medicien_model.dart';
+import 'package:pharmacy_management/core/model/medicine_model.dart';
 import 'package:pharmacy_management/core/storage/tokenstorage.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/data/data_source.dart/base_medicien_m_datasource.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/repo/base_medicien_m_repo.dart';
@@ -16,7 +16,7 @@ class MedicienMRepoImpl implements BaseMedicienMRepo {
   Future<Either<AppFailure, String>> addMedicien(Medicine medicien) async {
     try {
       final token = await tokenStorage.getToken();
-      await datasource.addMedicien(MedicienModel.fromEntitiy(medicien), token!);
+      await datasource.addMedicien(MedicineModel.fromEntitiy(medicien), token!);
       return const Right("Medicien Added Successfully");
     } on RemoteException catch (e) {
       return Left(RemoteFailure(message: e.message, statusCode: e.statusCode));
@@ -43,7 +43,7 @@ class MedicienMRepoImpl implements BaseMedicienMRepo {
     try {
       final token = await tokenStorage.getToken();
       await datasource.editeMedicien(
-        MedicienModel.fromEntitiy(medicien),
+        MedicineModel.fromEntitiy(medicien),
         token!,
         medicien.id!,
       );

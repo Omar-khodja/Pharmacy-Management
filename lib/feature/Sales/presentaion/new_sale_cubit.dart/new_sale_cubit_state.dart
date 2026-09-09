@@ -1,4 +1,4 @@
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 
 sealed class NewSaleCubitState {
   final List<Medicine> medicine;

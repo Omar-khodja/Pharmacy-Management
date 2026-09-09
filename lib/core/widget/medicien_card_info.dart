@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/core/widget/Textbedge.dart';
 import 'package:pharmacy_management/core/widget/custom_iconbutton.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/controlers/category_cubit/category_cubit.dart';

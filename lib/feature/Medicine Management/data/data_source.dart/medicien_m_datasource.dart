@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pharmacy_management/core/model/category_model.dart';
-import 'package:pharmacy_management/core/model/medicien_model.dart';
+import 'package:pharmacy_management/core/model/medicine_model.dart';
 import 'package:pharmacy_management/core/network/api_client.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/data/data_source.dart/base_medicien_m_datasource.dart';
 
@@ -8,7 +8,7 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
   new({required this.apiClient});
   final ApiClient apiClient;
   @override
-  Future<String> addMedicien(MedicienModel medicien, String token) async {
+  Future<String> addMedicien(MedicineModel medicien, String token) async {
     try {
        await apiClient.post(
         "/medicines",
@@ -35,7 +35,7 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
 
   @override
   Future<String> editeMedicien(
-    MedicienModel medicien,
+    MedicineModel medicien,
     String token,
     int id,
   ) async {
@@ -53,18 +53,18 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
   }
 
   @override
-  Future<MedicienModel> getDetails(String id, String token) async {
+  Future<MedicineModel> getDetails(String id, String token) async {
     try {
       final respons = await apiClient.get("/medicines/$id", token);
       final data = respons.data['data'] as Map<String, dynamic>;
-      return MedicienModel.fromJson(data);
+      return MedicineModel.fromJson(data);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<List<MedicienModel>> search(String query, String token) async {
+  Future<List<MedicineModel>> search(String query, String token) async {
     try {
       final respons = await apiClient.get(
         "/medicines?q=$query",
@@ -72,7 +72,7 @@ class MedicienMDatasource implements BaseMedicienMDatasource {
       );
 
       final List data = respons.data['data'] as List;
-      return data.map((json) => MedicienModel.fromJson(json)).toList();
+      return data.map((json) => MedicineModel.fromJson(json)).toList();
     } catch (e) {
       debugPrint("/////////////////////////////////// search ${e.toString()}");
       rethrow;

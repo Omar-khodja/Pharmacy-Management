@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 
 class CartItemWidget extends StatefulWidget {
   const CartItemWidget({

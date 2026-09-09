@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_state.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/core/widget/medicien_card_info.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

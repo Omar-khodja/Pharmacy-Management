@@ -1,4 +1,4 @@
-import 'package:pharmacy_management/core/model/medicien_model.dart';
+import 'package:pharmacy_management/core/model/medicine_model.dart';
 import 'package:pharmacy_management/feature/Inventory/domain/entities/inventory_alaret.dart';
 
 class InventoryAlaretModel extends InventoryAlaret {
@@ -10,9 +10,15 @@ class InventoryAlaretModel extends InventoryAlaret {
 
   factory InventoryAlaretModel.fromJson(Map<String, dynamic> json) {
     return InventoryAlaretModel(
-      expired: (json["expired"] as List).map((item) => MedicienModel.fromJson(item) ,).toList(),
-      expiredSoon: (json["expiring_soon"]as List).map((item) => MedicienModel.fromJson(item) ,).toList(),
-      lowStock: (json["low_stock"]as List).map((item) => MedicienModel.fromJson(item) ,).toList(),
+      expired: (json["expired"] as List)
+          .map((item) => MedicineModel.fromJson(item))
+          .toList(),
+      expiredSoon: (json["expiring_soon"] as List)
+          .map((item) => MedicineModel.fromJson(item))
+          .toList(),
+      lowStock: (json["low_stock"] as List)
+          .map((item) => MedicineModel.fromJson(item))
+          .toList(),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 
   class InventoryAlaret extends Equatable {
   const new({

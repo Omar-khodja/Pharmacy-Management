@@ -1,6 +1,6 @@
 import 'package:dart_either/dart_either.dart';
 import 'package:pharmacy_management/core/entities/category.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/core/error/failure.dart';
 
 abstract class BaseMedicienMRepo {

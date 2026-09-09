@@ -42,7 +42,7 @@ class AuthRepoImpl implements BaseAuthRepo {
       if (token == null) {
         return Left(LocalStorageFailure(message: "No token found"));
       }
-      await datasource.longOut(token);
+      await datasource.logOut(token);
       await tokenStorage.deleteToken();
       return const Right("Logged Out Successfully");
     } on RemoteException catch (e) {

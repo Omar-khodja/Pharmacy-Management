@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/add_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/delete_usecase.dart';
 import 'package:pharmacy_management/feature/Medicine%20Management/domain/usecase/details_usecase.dart';

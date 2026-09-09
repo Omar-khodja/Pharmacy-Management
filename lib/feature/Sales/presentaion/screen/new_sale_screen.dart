@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc.dart';
 import 'package:pharmacy_management/core/controler/medicien_mangment_bloc/medicien_mangment_bloc_event.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/core/widget/primary_elevatedbutton.dart';
 
 import 'package:pharmacy_management/core/widget/search_widget.dart';
@@ -43,6 +43,12 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
     if (mounted) {
       Navigator.of(context).pop();
     }
+   
+    
+  }
+
+  void _clearBasket() async {
+    await context.read<NewSaleCubit>().clearBasket();
   }
 
   @override
@@ -130,6 +136,11 @@ class _NewSaleScreenState extends State<NewSaleScreen> {
                       PrimaryElevatedbutton(
                         title: "Save",
                         onClick: () => _onSave(state.medicine),
+                      ),
+                      PrimaryElevatedbutton(
+                        title: "Cancel",
+                        onClick: () => _clearBasket(),
+                        isPrimary: false,
                       ),
                     ],
                   ),

@@ -1,8 +1,8 @@
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 import 'package:pharmacy_management/core/model/category_model.dart';
 
-class MedicienModel extends Medicine {
-  const MedicienModel({
+class MedicineModel extends Medicine {
+  const MedicineModel({
     required super.id,
     required super.name,
     required super.categoryId,
@@ -17,8 +17,8 @@ class MedicienModel extends Medicine {
     required super.isExpiringSoon,
   });
 
-  factory MedicienModel.fromJson(Map<String, dynamic> json) {
-    return MedicienModel(
+  factory MedicineModel.fromJson(Map<String, dynamic> json) {
+    return MedicineModel(
       id: json['id'] ,
       name: json['name'],
       categoryId: json['category_id'],
@@ -51,8 +51,8 @@ class MedicienModel extends Medicine {
     };
   }
 
-  factory MedicienModel.fromEntitiy(Medicine medicien) {
-    return MedicienModel(
+  factory MedicineModel.fromEntitiy(Medicine medicien) {
+    return MedicineModel(
       id: medicien.id,
       name: medicien.name,
       categoryId: medicien.categoryId,

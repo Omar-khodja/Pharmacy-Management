@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:pharmacy_management/core/entities/medicien.dart';
+import 'package:pharmacy_management/core/entities/medicine.dart';
 
 sealed class MedicienMangmentBlocState extends Equatable{
   const MedicienMangmentBlocState();
