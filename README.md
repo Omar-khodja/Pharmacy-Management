@@ -72,10 +72,7 @@ lib/
   - Inventory & stock management
   - Low-stock & expiry alerts
   - Responsive UI with error/loading/empty  states
-##  Screenshots
-![Dashboard](assets/screenshots/login.png)
-![Medicine Management](assets/screenshots/medicine.jpg)
-![Sales](assets/screenshots/sales.jpg)
-![Inventory](assets/screenshots/inventory.jpg)
+
+
 
    
