@@ -10,7 +10,6 @@ import 'package:pharmacy_management/feature/Medicine%20Management/presentaion/sc
 import 'package:pharmacy_management/feature/Sales/presentaion/screen/sales.dart';
 import 'package:pharmacy_management/feature/dashboard/presentaion/screen/dashboard.dart';
 
-
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -138,9 +137,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         body: BlocListener<AuthCubit, AuthCubitState>(
           listener: (context, state) {
             if (mounted && state is UnAuthorized) {
-              Fluttertoast.showToast(
-                msg: state.message,
-              );
+              Fluttertoast.showToast(msg: state.message);
               Navigator.pushReplacementNamed(context, "/login");
             }
           },

@@ -106,7 +106,7 @@ class MedicienCardInfo extends StatelessWidget {
                     : Colors.green,
               ),
             ),
-           
+
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: .start,
@@ -124,6 +124,8 @@ class MedicienCardInfo extends StatelessWidget {
                     icon: Icons.warning,
                     color: Colors.red,
                   ),
+                const SizedBox(width: 12),
+
                 if (medicine.isExpired!)
                   const TextBedge(
                     title: "Expired",
