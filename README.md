@@ -61,7 +61,7 @@ lib/
  │    └── inventory/           # Stock management
  ├──navigation_screen/
  ├──splashScreen/
- ├── widgets/                  # Global reusable UI components
+ ├── widgets/                  
  └── main.dart
  ```
 # Features
